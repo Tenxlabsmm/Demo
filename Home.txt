@@ -1,0 +1,8 @@
+*** Settings ***
+Library           Selenium2Library
+Library           AutoItLibrary
+
+*** Test Cases ***
+Tc1
+    Open Browser    http://www.gmail.com    ff
+    AutoItLibrary.Mouse Move    2    2
