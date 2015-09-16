@@ -1,0 +1,46 @@
+*** Test Cases ***
+WZ_TC01_Validate with valid login credentials
+    [Documentation]    Validating with valid login credentials , User should able to login the application
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Enter User ID and Password    Test Data: User ID- r.student4 , Password- r.student4
+    Click on Sign In button    \    Expected Result: Home Screen should be displayed with the logged in user name
+
+WZ_TC02_Validate user with Invalid User ID credentials
+    [Documentation]    Validating with Invalid user id login credentials, error message sould be displayed for invalid user id
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Enter Invalid User ID into the User ID field    Test Data: User ID-admin!234
+    Enter Valid Password into the password field    Test Data: Password- adminpwd
+    Click on Sign In button    \    Expected Result: Error message should be displayed as "The UserID or Password is incorrect. Please try again"
+
+WZ_TC03_Validate user with Invalid Password credentials
+    [Documentation]    Validating with Invalid login password credentials, error message should be displayed for the invalid password
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Enter Valid User ID into the User ID field    Test Data: User ID- adminpwd
+    Enter Invalid password into the password field    Test Data: Password- admin!234
+    Click on Sign In button    \    Expected Result: Error message should be displayed as "The UserID or Password is incorrect. Please try again"
+
+WZ_TC04_Validate user with no login credentials
+    [Documentation]    Validating with empty login credentials, error message should be displayed for the empty login
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Click on Sign In button    \    Expected Result: Error message should be displayed as "The UserID or Password is incorrect. Please try again"
+
+WZ_TC05_Validate User ID with special characters
+    [Documentation]    Validating User ID with special characters, Error message should be displayed for user id starting with special charecter
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/    Expected Result:Wizard login page should be displayed
+    Enter User ID starting with special character    Test Data: User ID- !$@a
+    Enter Password    Test Data: Password- a
+    Click on Sign In button    \    Expected Result: User should able to login successfully
+
+WZ_TC06_Validate Password with special characters
+    [Documentation]    Validating Password with Special characters, Error message should be displayed for password starting with special charecter
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Enter valid User ID into the User ID field    Test Data: User ID- w
+    Enter Password starting with special character    Test Data: Password- !@#W
+    Click on Sign In button    \    Expected Result: User should able to login successfully
+
+WZ_TC07_Validate Assignment Code field
+    [Documentation]    Validate Assignment code field by entering valid and invalid password
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Enter valid User ID into the User ID field    Test Data: User ID- adminid
+    Enter invalid password and verify the Assignment code field    Test Data: password-adcb    Expected Result:Data in the Assignment Code field should be displayed as "Assignment code(s)"
+    Enter valid password and verify the Assignment code field    Test Data: Password- adminpwd    Expected Result:Data in the Assignment Code field should be displayed as "Assignment code (s) (Optional)"

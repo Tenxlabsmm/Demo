@@ -1,0 +1,33 @@
+*** Test Cases ***
+WZ_TC01_Validate School Report
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: adminid, Password:adminpwd
+    Click On Reports Button
+    Click On School Report
+    Select a Subject from Subject drop down list    \    Expected Result: Report should be displayed for the selected Subjects
+
+WZ_TC02_Validate Standard Abbreviation in School Report
+    [Documentation]    Validate Standard Abbrivation in School Report
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Reports Button
+    Click On School Report
+    Select a Subject from Subject drop down list
+    Click on Show Scores Button    \    Expected Result: Standard Abbreviation should be displayed for the selected Subject
+    Mouse over on the standard Abbreviation    \    Expected Result: Tool tip should be displayed with the full wording of the standard Abbreviations
+
+WZ_TC03_Validate Show Scores Functionality in School Report
+    [Documentation]    Validate Show Scores Functionality in School Report
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Reports Button
+    Click On School Report
+    Select a Subject from Subject drop down list
+    Click on Show Scores button    \    Expected Result: Hide scores button and Over all score of the Class should be displayed in Numeric format
+    Click on Hide Scores button    \    Expected Result: Over all score of the Class should be displayed in Pie Chart format
+
+WZ_TC04_Validate Print and Download Functionality in School Report
+    [Documentation]    Validate Print and Download Functionality in School Report
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Reports Button
+    Click On School Report
+    Select a Subject from Subject drop down list
+    Click on Print    \    Expected Result: 'Subject Report' of the classes should be printed
+    Click on Download    \    Expected Result: 'Subject Report' of the classes should be downloaded

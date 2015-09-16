@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20140526 11:52:31.070" generator="Robot 2.8.4 (Python 2.7.6 on win32)">
+<suite source="C:\Wizard_Latest\Wizard_Interface\Automation_Testsuites\TestSuites\Demo.txt" id="s1" name="Demo">
+<test id="s1-t1" name="Wizard_Login">
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>Login to Wizard appplication with valid credentials of student.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:52:31.445" starttime="20140526 11:52:31.445"></status>
+</kw>
+<kw type="kw" name="${loginStatus} = login.LoginToApplication">
+<doc>Keyword is Used to Login into the Application.</doc>
+<arguments>
+<arg>${WizardURL}</arg>
+<arg>${BROWSER}</arg>
+<arg>${studentUserID}</arg>
+<arg>${studentPassword}</arg>
+</arguments>
+<kw type="kw" name="${loginStatus} = BuiltIn.Set Variable">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>False</arg>
+</arguments>
+<msg timestamp="20140526 11:52:31.460" level="INFO">${loginStatus} = False</msg>
+<status status="PASS" endtime="20140526 11:52:31.445" starttime="20140526 11:52:31.445"></status>
+</kw>
+<kw type="kw" name="login.OpenBrowserToLoginPage">
+<doc>Keyword is Used to Open the browser with given 'URL'.</doc>
+<arguments>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${SauceLabs_Connect}'=='Yes'</arg>
+<arg>Open Browser</arg>
+<arg>${url}</arg>
+<arg>${Browser}</arg>
+<arg>remote_url=${SELENIUM HOST}</arg>
+<arg>desired_capabilities=${DESIRED_CAPABILITIES}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Open Browser">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${url}</arg>
+<arg>${Browser}</arg>
+<arg>remote_url=${SELENIUM HOST}</arg>
+<arg>desired_capabilities=${DESIRED_CAPABILITIES}</arg>
+</arguments>
+<msg timestamp="20140526 11:52:31.460" level="INFO">Opening browser 'gc' to base url 'http://mmtxtest.mysatori.com/' through remote server at 'http://jody3t:c1ce8d09-98c7-4f5b-a533-fb5bdb34cbe0@ondemand.saucelabs.com:80/wd/hub'</msg>
+<status status="PASS" endtime="20140526 11:52:40.437" starttime="20140526 11:52:31.460"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:52:40.437" starttime="20140526 11:52:31.460"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${SauceLabs_Connect}'=='No'</arg>
+<arg>Open Browser</arg>
+<arg>${url}</arg>
+<arg>${Browser}</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:52:40.437" starttime="20140526 11:52:40.437"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Maximize Browser Window">
+<doc>Maximizes current browser window.</doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140526 11:57:41.343" level="FAIL">WebDriverException: Message: u'Job 26722bcae045424fa5bb3c9158631bd1 has been breakpointed' </msg>
+<status status="FAIL" endtime="20140526 11:57:41.344" starttime="20140526 11:57:40.884"></status>
+</kw>
+<msg timestamp="20140526 11:57:41.344" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: WebDriverException: Message: u'Job 26722bcae045424fa5bb3c9158631bd1 has been breakpointed' </msg>
+<msg timestamp="20140526 11:57:41.459" level="FAIL">BadStatusLine: ''</msg>
+<status status="FAIL" endtime="20140526 11:57:41.459" starttime="20140526 11:52:40.437"></status>
+</kw>
+<status status="FAIL" endtime="20140526 11:57:41.460" starttime="20140526 11:52:31.460"></status>
+</kw>
+<status status="FAIL" endtime="20140526 11:57:41.460" starttime="20140526 11:52:31.445"></status>
+</kw>
+<kw type="teardown" name="global.Stop Application">
+<doc>1.Closes the browser</doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>closes the browser.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:57:41.464" starttime="20140526 11:57:41.464"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Close Browser">
+<doc>Closes the current browser.</doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140526 11:57:42.241" level="FAIL">WebDriverException: Message: u'Job 26722bcae045424fa5bb3c9158631bd1 has been breakpointed' </msg>
+<status status="FAIL" endtime="20140526 11:57:42.242" starttime="20140526 11:57:41.853"></status>
+</kw>
+<msg timestamp="20140526 11:57:42.242" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: WebDriverException: Message: u'Job 26722bcae045424fa5bb3c9158631bd1 has been breakpointed' </msg>
+<msg timestamp="20140526 11:57:42.257" level="FAIL">WebDriverException: Message: u'Job 26722bcae045424fa5bb3c9158631bd1 has been breakpointed' </msg>
+<status status="FAIL" endtime="20140526 11:57:42.257" starttime="20140526 11:57:41.465"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${BROWSER}'=='ie'</arg>
+<arg>Process Close</arg>
+<arg>IEDriverServer.exe</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:57:42.258" starttime="20140526 11:57:42.257"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${BROWSER}'=='gc'</arg>
+<arg>Process Close</arg>
+<arg>chromedriver.exe</arg>
+</arguments>
+<kw type="kw" name="AutoItLibrary.Process Close">
+<doc>method ProcessClose</doc>
+<arguments>
+<arg>chromedriver.exe</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:57:42.261" starttime="20140526 11:57:42.259"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:57:42.262" starttime="20140526 11:57:42.259"></status>
+</kw>
+<status status="FAIL" endtime="20140526 11:57:42.262" starttime="20140526 11:57:41.461">WebDriverException: Message: u'Job 26722bcae045424fa5bb3c9158631bd1 has been breakpointed' </status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="FAIL" endtime="20140526 11:57:42.262" critical="yes" starttime="20140526 11:52:31.445">BadStatusLine: ''
+
+Also teardown failed:
+WebDriverException: Message: u'Job 26722bcae045424fa5bb3c9158631bd1 has been breakpointed' </status>
+</test>
+<doc></doc>
+<metadata>
+</metadata>
+<status status="FAIL" endtime="20140526 11:57:42.265" starttime="20140526 11:52:31.070"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="1" pass="0">Critical Tests</stat>
+<stat fail="1" pass="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="1" pass="0" id="s1" name="Demo">Demo</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20140526 11:57:41.344" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: WebDriverException: Message: u'Job 26722bcae045424fa5bb3c9158631bd1 has been breakpointed' </msg>
+<msg timestamp="20140526 11:57:42.242" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: WebDriverException: Message: u'Job 26722bcae045424fa5bb3c9158631bd1 has been breakpointed' </msg>
+</errors>
+</robot>

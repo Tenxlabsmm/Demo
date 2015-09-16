@@ -1,0 +1,9 @@
+*** Variables ***
+${table.classesAndGroups}    //div[contains(@id,'groupGrid')]
+${table.users}    //div[@id='userGrid']
+${table.fromTable}    //div[contains(@class,'fromInlineDijit')]//div[@class='header']/following-sibling::div
+${table.toTable}    //div[contains(@class,'toInlineDigit')]//div[@class='header']/following-sibling::div
+${table.studentsFrame.rows}    //div[contains(@id,'groupUsersList-row')]
+${table.tiltlesFrame.rows}    //div[contains(@id,'groupSyllabusList-row')]
+${table.splitter}    //div[contains(@id,'GroupPropsBC_splitter')]
+${table.user.splitter}    //div[contains(@id,'UserPropsBC_splitter')]

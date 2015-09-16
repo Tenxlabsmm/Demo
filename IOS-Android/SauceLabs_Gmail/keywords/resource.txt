@@ -1,0 +1,49 @@
+*** Settings ***
+Documentation     A resource file containing the demo app specific keywords and variables that create our own domain specific language. Also SeleniumLibrary itself is imported here so that tests only need to import this resource file.
+Library           Selenium2Library
+
+*** Variables ***
+${DELAY}          0
+${HOST}           saucelabs.com
+${LOGIN URL}      https://www.gmail.com/
+${ACCOUNT URL}    https://www.${HOST}/account
+${VALID USER}     asd
+${VALID PASSWD}    xyz
+${BROWSER}        android
+${SELENIUM_HOST}    http://${USERNAME}:${ACCESS_KEY}@ondemand.saucelabs.com:80/wd/hub
+${DESIRED_CAPABILITIES}    name:${name},browser:${BROWSER},version:${version},platform:${platform},deviceName:${DeviceName}
+${USERNAME}       jody3t
+${ACCESS_KEY}     c1ce8d09-98c7-4f5b-a533-fb5bdb34cbe0
+${platform}       Android
+${name}           Test On Samsung Galaxy S3 Emulator
+${version}        4.3
+${DeviceName}     Samsung Galaxy S3 Emulator
+
+*** Keywords ***
+Open Login Page
+    [Documentation]    Maximize Browser Window
+    Open Browser    ${LOGIN URL}    ${BROWSER}    remote_url=${SELENIUM_HOST}    desired_capabilities=${DESIRED_CAPABILITIES}
+
+Go To Login Page
+    Go To    ${LOGIN URL}
+    Title Should Be    Login - Sauce Labs
+
+Input Username
+    [Arguments]    ${username}
+    Input Text    Email    ${username}
+
+Input Password
+    [Arguments]    ${password}
+    Input Text    Passwd    ${password}
+
+Submit Credentials
+    Click Element    signIn
+
+Verify Login
+    Wait Until Element Is Visible    errormsg_0_Passwd    20s    WELCOME
+    ${LoginError}    Get Text    errormsg_0_Passwd
+    Should Contain    ${LoginError}    email or password you entered is incorrect.
+
+TestOnDiffOS
+    Comment    iphone    name:Testing on iOS,browser:iphone,version:4.3,platform:iOS 7.0    IOS
+    Comment    android    name:Testing On android,browser:android,version:4,platform:android    Android

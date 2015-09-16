@@ -1,0 +1,3 @@
+*** Variables ***
+${image.fromTable.plus}    ${table.fromTable}//button[contains(@class,'dgrid-hider-toggle')]
+${image.toTable.plus}    ${table.toTable}//button[contains(@class,'dgrid-hider-toggle')]

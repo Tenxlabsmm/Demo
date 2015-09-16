@@ -1,0 +1,13 @@
+*** Test Cases ***
+WZ_TC01_Validate help Button in Home Page
+    Open browser and enter App URL    Test Data: https://mmtxtest.mysatori.com
+    Verify Page    \    Expected Result: Page should contain 'Help' button.
+    Enter User ID into the UserId field    Test Data: adminid
+    Enter Password into the Password field    Test Data: adminpwd
+    Click On Sign IN Button    \    Expected Result : Help button should be displayed
+    Click on Help Button    \    Expected Result: A New window should be Opened with Help details.
+
+WZ_TC02_Validate Sign Out Button in Home Page
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: adminid Password:adminpwd
+    Click On Sign IN Button    \    Expected Result : Sign Out button should be displayed.
+    Click on Sign Out Button    \    Expected Result: Logged in user should be signed out and Login Page should be displayed.

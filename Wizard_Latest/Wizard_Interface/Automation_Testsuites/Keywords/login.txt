@@ -1,0 +1,57 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../Objects/Buttons.txt
+Resource          ../Objects/Labels.txt
+Resource          ../Objects/TextBoxes.txt
+Library           ../Library/CommonLibrary.py
+
+*** Keywords ***
+LoginToApplication
+    [Arguments]    ${URL}    ${BROWSER}    ${userID}    ${password}
+    [Documentation]    Keyword is Used to Login into the Application.
+    ${loginStatus}=    Set Variable    False
+    OpenBrowserToLoginPage    ${URL}    ${BROWSER}
+    Comment    Enters the login details & click on 'SignIn' button.
+    Enter Login Details    ${userID}    ${password}
+    Comment    Checks whether alert message is displayed or not. If displayed, reads the alert message.
+    @{list}=    CommonLibrary.Get Alert Message
+    Comment    Verifying wether the Browser Validaton pop up window is displayed or Not.If it displayed clicks on 'OK' Button
+    ${bStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${label.login.browserValidation}    10s
+    Run Keyword If    ${bStatus}==True    Click Element    ${button.browserValidation.Ok}
+    ${alertStatus}=    Convert To Boolean    @{list}[0]
+    ${signoutStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.wizard.signOut}    15s
+    ${loginStatus}=    Evaluate    ${alertStatus}==False and ${signoutStatus}==True
+    Set Global Variable    ${alertText}    @{list}[1]
+    Set Global Variable    ${alertStatus}    ${alertStatus}
+    [Return]    ${loginStatus}
+
+OpenBrowserToLoginPage
+    [Arguments]    ${url}    ${Browser}
+    [Documentation]    Keyword is Used to Open the browser with given 'URL'.
+    Run Keyword If    '${SauceLabs_Connect}'=='Yes'    Open Browser    ${url}    ${Browser}    remote_url=${SELENIUM HOST}    desired_capabilities=${DESIRED_CAPABILITIES}
+    Run Keyword If    '${SauceLabs_Connect}'=='No'    Open Browser    ${url}    ${Browser}
+    Comment    Maximize Browser Window
+    Comment    Delete All Cookies
+    Comment    wait for page load
+    Wait Until Element Is Visible    ${button.wizard.signIn}    40s    The application is not loaded properly.
+    Comment    Sleep    10s
+
+Enter Login Details
+    [Arguments]    ${userName}    ${password}
+    [Documentation]    This Keyword is Used to Enter the User Credentials & clicks on the 'Sign-IN' button.
+    Wait Until Element Is Visible    ${text.wizard.userID}    15s
+    Input Text    ${text.wizard.userID}    ${userName}
+    Sleep    2s
+    Input Password    ${text.wizard.password}    ${password}
+    Sleep    2s
+    Wait Until Element Is Visible    ${button.wizard.signIn}    15s
+    Click Element    ${button.wizard.signIn}
+    Sleep    15s
+
+wait for page load
+    [Documentation]    Keyword is used to wait upto login Page loading.
+    : FOR    ${iCounter}    IN RANGE    1    10
+    \    ${st}    Run Keyword And Return Status    Wait Until Element Is Visible    //div[@id='loader']//div[@id='loaderInner']    10s
+    \    Comment    Run Keyword If    ${st}==True    Capture Page Screenshot    Loadingpage.png
+    \    Run Keyword If    ${st}==False    Exit For Loop
+    \    Sleep    5s

@@ -1,0 +1,5 @@
+*** Variables ***
+${link.home.termsAndConditions}    //a[@id='linkToTerms' and contains(text(),'Terms and Conditions')]
+${button.termsAndConditions.close}    //div[contains(@class,'ui-dialog ui-widget')]//div[contains(@class,'ui-dialog-buttonpane')]//span[contains(text(),'Close')]
+${link.home.contactUs}    //a[@id='linkToContactUs' and contains(text(),'Contact Us')]
+${link.login.forgotUserIdPassword}    //span[@id='forgotPassword' and contains(text(),'Forgot Your User ID or Password?')]

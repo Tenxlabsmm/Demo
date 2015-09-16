@@ -1,0 +1,47 @@
+*** Settings ***
+Documentation     A resource file containing the demo app specific keywords and variables that create our own domain specific language. Also SeleniumLibrary itself is imported here so that tests only need to import this resource file.
+Library           Selenium2Library
+
+*** Variables ***
+${DELAY}          0
+${HOST}           saucelabs.com
+${LOGIN URL}      https://${HOST}/login
+${ACCOUNT URL}    https://www.${HOST}/account
+${VALID USER}     Rafikhan29
+${VALID PASSWD}    Saucelabs
+${BROWSER}        firefox
+${SELENIUM HOST}    http://Rafikhan29:47ab59b8-9b87-4433-8fa1-b02111cabbba@ondemand.saucelabs.com:80/wd/hub
+${DESIRED_CAPABILITIES}    name:Testing RobotFramework Selenium2Library,platform:Windows 7
+${SausLabs_Connect}    Yes
+
+*** Keywords ***
+Open Login Page
+    [Documentation]    Maximize Browser Window
+    Run Keyword If    '${SausLabs_Connect}'=='Yes'    Open Browser    ${LOGIN URL}    ${BROWSER}    remote_url=${SELENIUM HOST}    desired_capabilities=${DESIRED_CAPABILITIES}
+    Run Keyword If    '${SausLabs_Connect}'=='No'    Open Browser    ${LOGIN URL}    ${BROWSER}
+    Set Selenium Speed    ${DELAY}
+
+Go To Login Page
+    Go To    ${LOGIN URL}
+    Title Should Be    Login - Sauce Labs
+
+Input Username
+    [Arguments]    ${username}
+    Input Text    username    ${username}
+
+Input Password
+    [Arguments]    ${password}
+    Input Text    password    ${password}
+
+Submit Credentials
+    Click Element    submit
+
+Verify Login
+    Wait Until Page Contains Element    summarySection    30s    WELCOME
+    Title Should Be    Sauce Labs
+
+Open Login Page On Remote
+    [Documentation]    Maximize Browser Window
+    Run Keyword If    '${SausLabs_Connect}'=='Yes'    Open Browser    ${LOGIN URL}    ${BROWSER}    remote_url=${SELENIUM HOST}    desired_capabilities=${DESIRED_CAPABILITIES}
+    Run Keyword If    '${SausLabs_Connect}'=='No'    Open Browser    ${LOGIN URL}    ${BROWSER}
+    Set Selenium Speed    ${DELAY}

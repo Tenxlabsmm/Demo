@@ -1,0 +1,172 @@
+*** Settings ***
+Resource          ../Keywords/super.txt
+
+*** Test Cases ***
+WZ_TC01_Create Student User from SignUp
+    [Documentation]    1. Open wizrd App.
+    ...    2. Click on 'NewUser' button.
+    ...    3) click on 'Yes'.
+    ...    4) Enter the student details & click on 'SignUp' button.
+    ...    5) The 'newUser' should able to login to the 'Home' page with his 'UserName' on it.
+    Comment    open wizard app.
+    OpenBrowserToLoginPage    ${WizardURL}    ${BROWSER}
+    Sleep    15s
+    Comment    click 'NewUser' button.
+    ${newUserStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.login.newUser}    30s
+    Run Keyword If    ${newUserStatus}==True    Click Element    ${button.login.newUser}    ELSE    Fail    The 'New User' button is not visible.
+    Sleep    2s
+    Comment    click 'Yes' button in 'signUp' window.
+    ${yesButtonStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.signUp.yes}    30s
+    Sleep    2s
+    Run Keyword If    ${yesButtonStatus}==True    Click Element    ${button.signUp.yes}    ELSE    Fail    The'yes' button in 'signUp' dialog box is not visible.
+    Comment    Enter the 'AssignmentCode'
+    ${assignmentCodeBoxStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${text.signUp.SignUpCode}    30s
+    Run Keyword If    ${assignmentCodeBoxStatus}==True    Input Text    ${text.signUp.SignUpCode}    HK5
+    Sleep    5s
+    Comment    Enter 'FirstName','LastName','UserId','Password' of the student.
+    ${randomNumber}=    Get Random Number In Given Range    5    1000
+    ${testData}=    Set Variable    student${randomNumber}
+    ${firstNameStatus}=    Verify Element Visible    ${text.signUp.firstName}
+    Run Keyword If    ${firstNameStatus}==True    Input Text    ${text.signUp.firstName}    ${testData}
+    Input Text    ${text.signUp.lastName}    ${testData}
+    Input Text    ${text.signUp.userId}    ${testData}
+    Input Text    ${text.signUp.password}    ${testData}
+    Comment    Click on 'SignUp' button.
+    Click Element    ${button.signUp.signUp}
+    Sleep    30s
+    Comment    Validate the loginName of the student.
+    Wait Until Element Is Visible    ${label.wizard.loginName}    30s    The student userName is not visuible.
+    ${loginName}=    Get Text    ${label.wizard.loginName}
+    ${bLoginNameStatus}=    Run Keyword And Return Status    Should Contain    ${loginName}    Student: ${testData} ${testData}
+    Run Keyword If    '${bLoginNameStatus}'!='True'    Fail    The Actual UserName Mismatches with Expected UserName.
+    [Teardown]    Stop Application
+
+WZ_TC02_Create Student User without entering Mandatory fields
+    [Documentation]    1. Open wizard app.
+    ...    2) click on 'NewUser' & followed by 'yes' buttons.
+    ...    3) Enter all the mandatory fields except 'FirstName',it should be highlighted & 'SignUp' button should be disabled.
+    ...    4) Enter all the mandatory fields except 'LastName',it should be highlighted & 'SignUp' button should be disabled.
+    ...    5) \ Enter all the mandatory fields except 'UserId',it should be highlighted & 'SignUp' button should be disabled.
+    ...    6) Enter all the mandatory fields except 'Password',it should be highlighted & 'SignUp' button should be disabled.
+    Comment    Open wizrd app.
+    OpenBrowserToLoginPage    ${WizardURL}    ${BROWSER}
+    Sleep    15s
+    Comment    Click on 'NewUser' button.
+    ${newUserStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.login.newUser}    30s
+    Run Keyword If    ${newUserStatus}==True    Click Element    ${button.login.newUser}    ELSE    Fail    The 'New User' button is not visible.
+    Sleep    2s
+    Comment    click on the 'Yes' button.
+    ${yesButtonStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.signUp.yes}    30s
+    Sleep    2s
+    Run Keyword If    ${yesButtonStatus}==True    Click Element    ${button.signUp.yes}    ELSE    Fail    The'yes' button in 'signUp' dialog box is not visible.
+    Comment    Enter the 'AssignmentCode'.
+    ${assignmentCodeBoxStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${text.signUp.SignUpCode}    30s
+    Run Keyword If    ${assignmentCodeBoxStatus}==True    Input Text    ${text.signUp.SignUpCode}    HK5
+    Comment    Enter all the 'userdetails' except 'FirstName'.
+    ${testData}=    Set Variable    student
+    ${firstNameStatus}=    Verify Element Visible    ${text.signUp.firstName}
+    Run Keyword If    ${firstNameStatus}==False    Fail    The 'FirstName' textbox is not visible.    ${testData}
+    Input Text    ${text.signUp.lastName}    ${testData}
+    Input Text    ${text.signUp.userId}    ${testData}
+    Input Text    ${text.signUp.lastName}    ${testData}
+    Comment    Verify whether 'FirstName' text field is highlighted & 'SignUp' is enabled or not
+    ${bStatus}=    validateTheMandatoryField    FirstName
+    ${status}=    Run Keyword If    ${bStatus}==False    Fail    The 'FirstName' text field is not highlighted.    ELSE    Run Keyword And Return Status
+    ...    Element Should Be Enabled    ${button.signUp.signUp}
+    Run Keyword If    ${status}==True    Fail    The 'SignUp' button is enabled.    ELSE    Clear Text    ${text.signUp.lastName}
+    Input Text    ${text.signUp.firstName}    ${testData}
+    Comment    Verify whether the 'LastName' is highlighted& 'SignUp' is enabled or not
+    ${bStatus}=    validateTheMandatoryField    LastName
+    ${status}=    Run Keyword If    ${bStatus}==False    Fail    The 'LastName' text field is not highlighted.    ELSE    Run Keyword And Return Status
+    ...    Element Should Be Enabled    ${button.signUp.signUp}
+    Run Keyword If    ${status}==True    Fail    The 'SignUp' button is enabled.    ELSE    Clear Text    ${text.signUp.userId}
+    Input Text    ${text.signUp.lastName}    ${testData}
+    Comment    Verify whether the 'UserId' is highlighted & 'SignUp' is enabled or not
+    ${bStatus}=    validateTheMandatoryField    UserId
+    ${status}=    Run Keyword If    ${bStatus}==False    Fail    The 'UserId' text field is not highlighted.    ELSE    Run Keyword And Return Status
+    ...    Element Should Be Enabled    ${button.signUp.signUp}
+    Run Keyword If    ${status}==True    Fail    The 'SignUp' button is enabled.    ELSE    Clear Text    ${text.signUp.password}
+    Input Text    ${text.signUp.userId}    ${testData}
+    Comment    Verify whether the 'Password' is highlighted & 'SignUp' is enabled or not.
+    ${bStatus}=    validateTheMandatoryField    Password
+    ${status}=    Run Keyword If    ${bStatus}==False    Fail    The 'Password' text field is not highlighted.    ELSE    Run Keyword And Return Status
+    ...    Element Should Be Enabled    ${button.signUp.signUp}
+    Run Keyword If    ${status}==True    Fail    The 'SignUp' button is enabled.
+    [Teardown]    Stop Application
+
+WZ_TC03_Create Teacher User from SignUp
+    [Documentation]    1. Open wizard app.
+    ...    2) click on 'NewUser' & followed by 'yes' buttons
+    ...    3) Enter all the mandatory fields & click on 'SignUp' button.
+    ...    5) teacher should able to login with his 'userName'.
+    Comment    Open 'wizard' app.
+    OpenBrowserToLoginPage    ${WizardURL}    ${BROWSER}
+    Sleep    15s
+    Comment    Click on 'NewUser' button.
+    ${newUserStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.login.newUser}    30s
+    Run Keyword If    ${newUserStatus}==True    Click Element    ${button.login.newUser}    ELSE    Fail    The 'New User' button is not visible.
+    Sleep    2s
+    Comment    'Click on 'No' button.
+    ${noButtonStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.signUp.no}    30s
+    Sleep    2s
+    Run Keyword If    ${noButtonStatus}==True    Click Element    ${button.signUp.no}    ELSE    Fail    The'No' button in 'signUp' dialog box is not visible.
+    Comment    Enter 'InstructorCode'
+    ${signUPCodeStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${text.signUp.SignUpCode}    30s
+    Run Keyword If    ${signUPCodeStatus}==True    Input Text    ${text.signUp.SignUpCode}    ZZZ
+    Comment    Enter all the 'Instructor' details.
+    ${randomNumber}=    Get Random Number In Given Range    5    1000
+    ${testData}=    Set Variable    teacher${randomNumber}
+    ${firstNameStatus}=    Verify Element Visible    ${text.signUp.firstName}
+    Run Keyword If    ${firstNameStatus}==True    Input Text    ${text.signUp.firstName}    ${testData}
+    Input Text    ${text.signUp.lastName}    ${testData}
+    Input Text    ${text.signUp.userId}    ${testData}
+    Input Text    ${text.signUp.password}    ${testData}
+    Input Text    ${text.signUp.numOfClasses}    2
+    ${class1Status}=    Verify Element Visible    ${text.signUp.className1}
+    ${class2Status}=    Verify Element Visible    ${text.signUp.className2}
+    Run Keyword If    ${class1Status}==True and ${class2Status}==True    Input Text    ${text.signUp.className1}    teacherclass1${randomNumber}    ELSE    Fail
+    ...    The classNames text fields are not visible.
+    Input Text    ${text.signUp.className2}    teacherclass2${randomNumber}
+    Input Text    ${text.signUp.email}    ${testData}@mail.com
+    Click Element    ${button.signUp.signUp}
+    Sleep    30s
+    Comment    Instructor should able to 'Login' with his 'UserName'.
+    Wait Until Element Is Visible    ${label.wizard.loginName}    30s    The instructor userName is not visuible.
+    ${loginName}=    Get Text    ${label.wizard.loginName}
+    ${bLoginNameStatus}=    Run Keyword And Return Status    Should Contain    ${loginName}    Instructor: ${testData} ${testData}
+    Run Keyword If    '${bLoginNameStatus}'!='True'    Fail    The Actual UserName Mismatches with Expected UserName.
+    [Teardown]    Stop Application
+
+WZ_TC04_Create Teacher User from SignUp screen without Mandatory fields
+    [Documentation]    1. Open wizard app.
+    ...    2) click on 'NewUser' & followed by 'yes' buttons
+    ...    3) Enter all the fields except 'FirstName' - it should be highlighted & 'SignUp' button should be disabled.
+    Comment    Open 'wizard' app.
+    OpenBrowserToLoginPage    ${WizardURL}    ${BROWSER}
+    Sleep    15s
+    Comment    click on 'NewUser' button.
+    ${newUserStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.login.newUser}    30s
+    Run Keyword If    ${newUserStatus}==True    Click Element    ${button.login.newUser}    ELSE    Fail    The 'New User' button is not visible.
+    Sleep    2s
+    Comment    click on 'Yes' button.
+    ${noButtonStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.signUp.no}    30s
+    Sleep    2s
+    Run Keyword If    ${noButtonStatus}==True    Click Element    ${button.signUp.no}    ELSE    Fail    The'No' button in 'signUp' dialog box is not visible.
+    Comment    Enter 'InstructorCode'.
+    ${signUPCodeStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${text.signUp.SignUpCode}    30s
+    Run Keyword If    ${signUPCodeStatus}==True    Input Text    ${text.signUp.SignUpCode}    ZZZ
+    Comment    Enter all the 'InstructorDetails' except 'FirstName'
+    ${randomNumber}=    Get Random Number In Given Range    5    1000
+    ${testData}=    Set Variable    teacher${randomNumber}
+    ${firstNameStatus}=    Verify Element Visible    ${text.signUp.firstName}
+    Run Keyword If    ${firstNameStatus}==True    Input Text    ${text.signUp.lastName}    ${testData}
+    Input Text    ${text.signUp.userId}    ${testData}
+    Input Text    ${text.signUp.password}    ${testData}
+    Input Text    ${text.signUp.numOfClasses}    0
+    Input Text    ${text.signUp.email}    ${testData}@mail.com
+    Comment    Check whether the 'FirstName' textbox is highlighted & 'SighUp' button is disabled or not.
+    ${bStatus}=    validateTheMandatoryField    FirstName
+    ${status}=    Run Keyword If    ${bStatus}==False    Fail    The 'FirstName' text field is not highlighted.    ELSE    Run Keyword And Return Status
+    ...    Element Should Be Enabled    ${button.signUp.signUp}
+    Run Keyword If    ${status}==True    Fail    'Sign-Up' button is enabled.
+    [Teardown]    Stop Application

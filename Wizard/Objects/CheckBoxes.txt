@@ -1,0 +1,5 @@
+*** Settings ***
+Resource          ../Keywords/super.txt
+
+*** Variables ***
+${check.fromTable.firstRowCheckBox}    //div[contains(@id,'row')]/table/tr/td/input

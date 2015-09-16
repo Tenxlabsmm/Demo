@@ -1,0 +1,26 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          ../Objects/Buttons.txt
+Resource          ../Objects/TextBoxes.txt
+Library           AutoItLibrary
+
+*** Variables ***
+${BROWSER}        gc
+${WizardURL}      http://mmtxtest.mysatori.com/
+${studentUserID}    r.student4
+${studentPassword}    r.student4
+${adminUserID}    adminid
+${adminPassword}    adminpwd
+${SELENIUM HOST}    http://Rafikhan29:47ab59b8-9b87-4433-8fa1-b02111cabbba@ondemand.saucelabs.com:80/wd/hub
+${DESIRED_CAPABILITIES}    name:Test Minds,platform:Linux,version:34
+${SausLabs_Connect}    Yes
+
+*** Keywords ***
+Stop Application
+    [Documentation]    1.Closes the browser
+    ...    2.Closes the 'IEDRIVERSERVER'
+    ...    3.Closes the 'chromedriver'.
+    Comment    closes the browser.
+    Close Browser
+    Run Keyword If    '${BROWSER}'=='ie'    Process Close    IEDriverServer.exe
+    Run Keyword If    '${BROWSER}'=='gc'    Process Close    chromedriver.exe

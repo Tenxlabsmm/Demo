@@ -1,0 +1,165 @@
+*** Settings ***
+Resource          super.txt
+
+*** Keywords ***
+Select The Row
+    [Arguments]    ${tableLocator}    ${rowNo}
+    [Documentation]    Selects the given row in a table
+    ${bStatus}=    Run Keyword And Return Status    Click Element    ${tableLocator}/div[@class="dgrid-scroller"]/div[contains(@class,"dgrid-content")]//div[contains(@id,"Grid-row")][${rowNo}]
+    [Return]    ${bStatus}
+
+Clear All Checkboxes
+    [Arguments]    ${tableTitle}
+    ${class}=    Get Value    groupName
+    Run Keyword If    '${tableTitle}'=='Students'    Wait Until Element Is Visible    //div[@id='editGroupUsersBtn']    20s    ELSE    Wait Until Element Is Visible
+    ...    //div[@id='editGroupSyllabusBtn']    20s
+    Run Keyword If    '${tableTitle}'=='Students'    Click Element    //div[@id='editGroupUsersBtn']    ELSE    Click Element    //div[@id='editGroupSyllabusBtn']
+    Run Keyword And Continue On Failure    Run Keyword If    '${tableTitle}'=='Students'    Element Should Contain    //span[@id='listEditorDlg_title']    Edit Students in Class - ${class}    ELSE
+    ...    Element Should Contain    //span[@id='listEditorDlg_title']    Edit Syllabus of Class - ${class}
+    : FOR    ${iConter}    IN RANGE    1    5
+    \    ${at}=    Get Element Attribute    //div[contains(@class,'fromInlineDijit')]//th/input[@type='checkbox']@aria-checked
+    \    Run Keyword If    '${at}'=='false'    Exit For Loop
+    \    Click Element    //div[contains(@class,'fromInlineDijit')]//th/input[@type='checkbox']
+    Click Element    //div[@id='listEditorDlg']//span[contains(text(),'Save')]
+    Sleep    5s
+    ${studentsCount}    Get Text    //span[contains(@class,'subpanel-header-label') and contains(text(),'Students')]//following-sibling::span
+    ${titlesCount}    Get Matching Xpath Count    //div[contains(@id,'groupSyllabusList-row')]
+    Run Keyword And Continue On Failure    Run Keyword If    '${tableTitle}'=='Students'    Should Be Equal As Strings    ${studentsCount}    (0)    ELSE
+    ...    Should Be Equal As Integers    ${titlesCount}    0
+
+Select Student From A Class
+    [Arguments]    ${nameOfClass}
+    [Documentation]    Selects the First student of the given class & returns the studentname.
+    Sleep    5s
+    Wait Until Element Is Visible    ${table.classesAndGroups}    30s
+    @{classesNames}=    Get Table Values Into List    ${table.classesAndGroups}    Name
+    ${classesNames}=    Set Variable    @{classesNames}
+    : FOR    ${class}    IN    @{classesNames}
+    \    ${rowNo}=    Get Index From List    ${classesNames}    ${class}
+    \    ${rowNumber}=    Evaluate    ${rowNo}+1
+    \    Sleep    1s
+    \    ${className}=    Get Table Cell Value    ${table.classesAndGroups}    ${rowNumber}    Name
+    \    ${bStatus}=    Run Keyword If    "${className}"=="${nameOfClass}"    Common.Select The Row    ${table.classesAndGroups}    ${rowNumber}
+    \    Run Keyword If    ${bStatus}==True    Sleep    3s
+    \    ${studentName}=    Run Keyword If    ${bStatus}==True    Get Text    //div[contains(@id,'groupUsersList-row')]
+    \    Run Keyword If    "${studentName}"!="None"    Click Element    //div[contains(@id,'groupUsersList-row')]
+    \    Run Keyword If    "${studentName}"!="None"    Exit For Loop
+    [Return]    ${studentName}
+
+Get Selected Row Cell Value
+    [Arguments]    ${tableName}    ${columnName}
+    [Documentation]    returns the given column value of the selected row in the given table.
+    [Timeout]
+    ${columnNo}=    CommonLibrary.Table Get Column No    ${tableName}    ${columnName}
+    ${text}=    Get Text    ${tableName}/div[@class="dgrid-scroller"]/div[contains(@class,"dgrid-content")]//div[contains(@id,'-row') and contains(@class,'dgrid-selected')]/table/tr/td[${columnNo}]
+    [Teardown]
+    [Return]    ${text}
+
+Get Table Column Headers Into List
+    [Arguments]    ${tableLocator}
+    [Documentation]    Returns all the table column headers into a list
+    ${columnCount}=    Get Matching Xpath Count    ${tableLocator}//div[contains(@class,'dgrid-header dgrid-header-row')]/table/tr/th
+    ${columnHeadersList}=    Create List
+    : FOR    ${col}    IN RANGE    1    ${columnCount}+1
+    \    ${columnName}=    Get Text    ${tableLocator}//div[contains(@class,'dgrid-header dgrid-header-row')]/table/tr/th[${col}]
+    \    Append To List    ${columnHeadersList}    ${columnName}
+    ${listLength}=    Get Length Of List    ${columnHeadersList}
+    Log    ${listLength}
+    [Return]    ${columnHeadersList}
+
+UnSelect Column
+    [Arguments]    ${tableLocator}    ${columnName}
+    [Documentation]    Unselects the 'ColumnName' of the given by unchecking the radio button
+    Click Element    ${tableLocator}//button[contains(@class,'dgrid-hider-toggle')]
+    Sleep    2s
+    Click Element    ${tableLocator}//div[contains(@id,'dgrid-hider-menu')]//input[contains(@id,'hider-menu-check-${columnName}')]
+    Sleep    2s
+
+Check Box Selection Status
+    [Arguments]    ${tablelocator}    ${columnName}
+    Sleep    3s
+    Wait Until Element Is Visible    ${tablelocator}//label[contains(text(),'${columnName}')]/preceding-sibling::input    30s
+    ${checkboxidVal}    Get Element Attribute    ${tablelocator}//label[contains(text(),'${columnName}')]/preceding-sibling::input@id
+    Set Suite Variable    ${checkboxidVal}    ${checkboxidVal}
+    ${ckSt}    Run Keyword And Return Status    Checkbox Should Be Selected    ${checkboxidVal}
+    [Return]    ${ckSt}
+
+Change Status Of User
+    [Arguments]    ${firstName}    ${lastName}    ${role}    ${requiredStatus}
+    [Documentation]    Changes the status of the user the particular user to the '${reqiredStatus}'
+    Comment    Users table should appear
+    Sleep    5s
+    Select Frame    iframeSchoolAdmin
+    Wait Until Element Is Visible    ${table.users}    30s    The 'UsersGrid' is not visible.
+    Comment    Select the given user.
+    ${usersCount}=    Get Matching Xpath Count    ${table.users}/div[@class='dgrid-scroller']/div[contains(@class,'dgrid-content')]//div[contains(@id,'Grid-row')]
+    : FOR    ${user}    IN RANGE    1    ${usersCount}+1
+    \    ${userFirstName}=    Get Table Cell Value    ${table.users}    ${user}    First Name
+    \    ${userLastName}=    Get Table Cell Value    ${table.users}    ${user}    Last Name
+    \    ${userRole}=    Get Table Cell Value    ${table.users}    ${user}    Role
+    \    ${userStatus}=    Run Keyword If    "${userRole}"=="${role}" and "${userFirstName}"=="${firstName}" and "${userLastName}"=="${lastname}"    Get Table Cell Value    ${table.users}    ${user}
+    \    ...    Status
+    \    Run Keyword If    "${userRole}"=="${role}" and "${userFirstName}"=="${firstName}" and "${userLastName}"=="${lastname}"    Common.Select The Row    ${table.users}    ${user}
+    \    Exit For Loop If    "${userRole}"=="${role}" and "${userFirstName}"=="${firstName}" and "${userLastName}"=="${lastname}"
+    Comment    Click on the 'Edit' button of the 'UserDetails' table.
+    ${bStatus}=    Run Keyword And Return Status    Click Element    editUserBtn
+    Run Keyword If    "${bStatus}"!="True"    Fail    The given User details are not there in 'Users' table.
+    Sleep    3s
+    Comment    Get the user credentials by clicking on the "ShowPassword" button.
+    Click Element    togglePassword
+    ${userId}    Get Value    userUserId
+    Set Global Variable    ${userId}    ${userId}
+    ${password}=    Get Value    userPassword
+    Set Global Variable    ${password}    ${password}
+    Comment    Change the status of the user to the desired state.
+    Run Keyword If    "${requiredStatus}"=="active" and "${requiredStatus}"!="${userStatus}"    Click Element    userActive
+    Run Keyword If    "${requiredStatus}"=="inactive" and "${requiredStatus}"!="${userStatus}"    Click Element    userInactive
+    Comment    Click on the "Save" button of the "UserDetails" window.
+    Click Element    saveUserBtn
+    Sleep    5s
+
+Add A Class
+    [Arguments]    ${className}    ${instructorFullName}='${EMPTY}'    ${description}='${EMPTY}'
+    [Documentation]    keyword is used to Adds a class to the classes table
+    Comment    The 'Classes & Groups' table should appear with 'Add' button it.
+    Wait Until Element Is Visible    ${button.classesAndUsers.add}    30s    The 'Add' button on 'Classes & Users' table is not visible.
+    Comment    Click 'Add' button.
+    Click Element    ${button.classesAndUsers.add}
+    Sleep    3s
+    Wait Until Element Is Visible    ${text.newClass.Name}    20s
+    Input Text    ${text.newClass.Name}    ${className}
+    Run Keyword If    "${instructorFullName}"!='${Empty}'    Select The Desired Instructor    ${instructorFullName}
+    Run Keyword If    "${description}"!='${Empty}'    Input Text    newGroupDescription    ${description}
+    Click Element    newGroupOK
+    Sleep    7s
+    @{classesNames}=    Get Table Values Into List    ${table.classesAndGroups}    Name
+    ${classesNames}=    Set Variable    @{classesNames}
+    List Should Contain Value    ${classesNames}    ${className}     The newly added class is not shown in the 'Classes' table.
+
+Select The Desired Instructor
+    [Arguments]    ${desiredInstructorName}
+    [Documentation]    Keyword is used to Selects the desired instructor from the instructor drop down in the 'New Class' page.
+    ${instructorCount}=    Get Matching Xpath Count    //table[contains(@id,'newGroupLeader')]/tbody/tr[contains(@class,'dijitMenuItem')]
+    :FOR    ${ins}    IN RANGE    1    ${instructorCount}+1
+    \    ${instructorName}=    Get Element Attribute    //table[contains(@id,'newGroupLeader')]/tbody/tr[${ins}]@aria-label
+    \    Run Keyword If    ${instructorName}==${desiredInstructorName}    Click Element    //table[contains(@id,'newGroupLeader')]/tbody/tr[${ins}]
+    \    Exit For Loop If    ${instructorName}==${desiredInstructorName}
+
+Delete The Record
+    [Arguments]    ${tableLocator}    ${className}
+    [Documentation]    Delete's the desired record
+    ${count}=    Get Matching Xpath Count    ${tableLocator}/div[contains(@class,'dgrid-scroller')]/div[contains(@class,'dgrid-content')]//div[contains(@id,'Grid-row-')]
+    :FOR    ${row}    IN RANGE    1    ${count}+1
+    \    ${class}=    Get Text    ${tableLocator}/div[contains(@class,'dgrid-scroller')]/div[contains(@class,'dgrid-content')]//div[contains(@id,'Grid-row-')][${row}]/table/tr/td[1]
+    \    Run Keyword If    "${class}"=="${className}"    Common.Select The Row    ${tableLocator}    ${row}
+    \    ${recordNo}=    Run Keyword If    "${class}"=="${className}"    Set Variable    ${row}
+    \    Exit For Loop If    "${class}"=="${className}"
+    Click Element    deleteGroupBtn
+    Sleep    2s
+    ${alertText}    Confirm Action
+    Run Keyword And Continue On Failure    Should Be Equal As Strings    ${alertText}    Are you sure you want to delete the class '${className}'?    The alert message mismatches with the expected one.
+    Sleep    5s
+    @{classes}=    Get Table Values Into List    ${tableLocator}    Name
+    ${classes}=    Set Variable    @{classes}
+    List Should Not Contain Value    ${classes}    ${className}    The desired record is not deleted.
+    [Return]    ${recordNo}

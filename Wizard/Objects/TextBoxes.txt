@@ -1,0 +1,21 @@
+*** Variables ***
+${text.wizard.userID}    loginUserID
+${text.wizard.password}    userPasswd
+${text.signUp.SignUpCode}    //input[@id='signUpCode']
+${text.signUp.firstName}    //input[@id='signUpFirstName']
+${text.signUp.lastName}    //input[@id='signUpLastName']
+${text.signUp.userId}    //input[@id='signUpUserId']
+${text.signUp.password}    //input[@id='signUpPassword']
+${text.signUp.numOfClasses}    //input[@id='signUpNumClasses']
+${text.signUp.className1}    //input[@id='signUpClass1']
+${text.signUp.className2}    //input[@id='signUpClass2']
+${text.signUp.email}    //input[@id='signUpEmail']
+${text.home.assignmentCode}    //input[@id='assignmentCode']/following-sibling::span
+${text.newClass.Name}    //input[@id='newGroupName']
+${text.newClass.toasterMsg}    //div[@id='toasterMsg']/div[@class='dijitToasterContainer dijitToasterError']/div[@class='dijitToasterContent']
+${text.masterToolTip}    //div[contains(@id,'_MasterTooltip')]/div[contains(@class,'TooltipContainer')]
+${text.forgotDlg.userId}    //input[@id='forgotUserId']
+${text.forgotDlg.activationCode}    //input[@id='forgotCode']
+${text.forgotDlg.forgotPasswd}    //div[@id='widget_forgotPasswd']//input[@id='forgotPasswd']
+${text.userDetails.firstName}    userFirstName
+${text.userDetails.lastName}    userLastName

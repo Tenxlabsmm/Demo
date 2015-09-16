@@ -1,0 +1,50 @@
+*** Test Cases ***
+WZ_TC01_Validate Student Assignments
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: testM1@123, Password:testM1@123
+    Verify home page    \    Expected Result: Assigned assignments should be displayed with start button and progress should be zero
+    Click on Start Button
+    Submit all the questions using submit button
+    Click on Turn In Button    \    Expected Result:Graded report should be displayed
+
+WZ_TC02_Validate Pause and Continue Functionality
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: testM1@123, Password:testM1@123
+    Verify home page
+    Select the assignment and click on Start Button    \    Expected Result: Alloted Questions will be displayed with pause button
+    Click on Pause button    \    Expected Result: Exam will be paused and continue button will be displayed
+    Click on Continue Button    \    Expected Result:Exam will start from where it has paused
+
+WZ_TC03_Validate Student Interface Tool
+    [Documentation]    Validate Student Interface Tool with student role, which consist of Highlighter, Scale, Resources, Scratch Pad, Layouts \ which should be displayed on the righ side of the page
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: testM1@123, Password:testM1@123
+    Select the assignment and click on Start Button    \    Expected Result: Highlighter, Scale, Resources, Scratch Pad, Layouts should be displayed on the righ side of the page
+
+WZ_TC04_Validate Highlighter and Scale Functionality
+    [Documentation]    Validate Highlighter and Scale Functionality with Student role, when highlighter is selected highlighter should be displaye with note editor in the questions screen
+    ...    Note editor window should be displayed, enter any text, the enterd text should be displayed when mouse over on the highlighter
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: testM1@123, Password:testM1@123
+    Select the assignment and click on Start Button
+    Click on Highlighter    \    Expected Result: Highlighter should be displayed with a Note Editor
+    Click on Note Editor and enter any text    \    Expected Result: Note Editor window should be displayed and entered text should be displayed when mouse over on the highlighter
+    Click on Scale    \    Expected Result: Scale should be displayed with close, Rotate and Nudge buttons
+    Click on Rotate button    \    Expected Result: Scale should be rotated
+
+WZ_TC05_Validate Resources, Scratch Pad and Expand Grade Functionality
+    [Documentation]    Validate Resources, Scratch Pad and Expand Grade Function, Resource tabs should display the formulas or reference document of the assigned assignment.
+    ...    Sratch pad window should be displayed when scrath pad is clicked.
+    ...    Expand Grade should be expanded when clicked on the expanded grade and grade table should be collapse when collapse is clicked
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: testM1@123, Password:testM1@123
+    Select the assignment and click on Start Button
+    Click on Resources    \    Expected Result: 'Reference/ Formulas' page should be displayed of the selected assignment
+    Click on Scratch Pad    \    Expected Result: Scratch Pad window should be displayed
+    Click on Collapse Grade button    \    Expected Result: Grade table should be collapsed
+    Click on Expand Grade button    \    Expected Result: Grade table should be displayed
+
+WZ_TC06_Validate Close functionality in Graded Report
+    [Documentation]    Validate Close functionality in Graded Report, graded report page should be closed after clicking on close button and home page of the logged in student should be displayed
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: testM1@123, Password:testM1@123
+    Verify home page    \    Expected Result: Assigned assignments should be displayed with start button and progress should be zero
+    Click on Start Button
+    Submit all the questions using submit button
+    Click on Turn In Button
+    Click on Print at Graded Report page
+    Click on close at Graded Report page    \    Expected Result: Graded report page should be closed and Home page should be displayed

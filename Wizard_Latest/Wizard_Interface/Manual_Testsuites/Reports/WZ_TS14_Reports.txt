@@ -1,0 +1,4 @@
+*** Test Cases ***
+WZ_TC01_Validate Report Button
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: adminid, Password:adminpwd
+    Click On Reports Button    \    Expected Result: Page should displayed with 1.Class Report Button2.School Report Button 3.Activity Progress button

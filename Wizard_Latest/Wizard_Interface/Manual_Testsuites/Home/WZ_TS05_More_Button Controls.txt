@@ -1,0 +1,15 @@
+*** Test Cases ***
+WZ_TC01_Validate controls under the More button
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Verify More button
+    Click on More button    \    Expected Result: Dropdown list should be displayed which consist of 1.'Assignment Codes' 2.In Advanced 'classess & Users' 3.'Contact Us' 4.'Terms and Conditions'
+
+WZ_TC02_ Validate Terms and Condition Link
+    Login to wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on More button
+    Click on Terms and Conditions link    \    Expected Result: Terms and Conditions window should be displayed.
+
+WZ_TC03_ Validate Contact us link
+    Login to wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on More Button
+    Click on Contact Us link    \    Expected Result: Motiavtion Online Support window should be displayed with Support and Close button

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20140527 11:33:33.268" generator="Robot 2.8.4 (Python 2.7.6 on win32)">
+<suite source="C:\Wizard_Latest\Wizard_Interface\Automation_Testsuites\TestSuites\Demo.txt" id="s1" name="Demo">
+<test id="s1-t1" name="Wizard_Login">
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>Login to Wizard appplication with valid credentials of student.</arg>
+</arguments>
+<status status="PASS" endtime="20140527 11:33:33.626" starttime="20140527 11:33:33.626"></status>
+</kw>
+<kw type="kw" name="${loginStatus} = login.LoginToApplication">
+<doc>Keyword is Used to Login into the Application.</doc>
+<arguments>
+<arg>${WizardURL}</arg>
+<arg>${BROWSER}</arg>
+<arg>${studentUserID}</arg>
+<arg>${studentPassword}</arg>
+</arguments>
+<kw type="kw" name="${loginStatus} = BuiltIn.Set Variable">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>False</arg>
+</arguments>
+<msg timestamp="20140527 11:33:33.626" level="INFO">${loginStatus} = False</msg>
+<status status="PASS" endtime="20140527 11:33:33.626" starttime="20140527 11:33:33.626"></status>
+</kw>
+<kw type="kw" name="login.OpenBrowserToLoginPage">
+<doc>Keyword is Used to Open the browser with given 'URL'.</doc>
+<arguments>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${SauceLabs_Connect}'=='Yes'</arg>
+<arg>Open Browser</arg>
+<arg>${url}</arg>
+<arg>${Browser}</arg>
+<arg>remote_url=${SELENIUM HOST}</arg>
+<arg>desired_capabilities=${DESIRED_CAPABILITIES}</arg>
+</arguments>
+<status status="PASS" endtime="20140527 11:33:33.626" starttime="20140527 11:33:33.626"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${SauceLabs_Connect}'=='No'</arg>
+<arg>Open Browser</arg>
+<arg>${url}</arg>
+<arg>${Browser}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Open Browser">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${url}</arg>
+<arg>${Browser}</arg>
+</arguments>
+<msg timestamp="20140527 11:33:33.642" level="INFO">Opening browser 'gc' to base url 'http://mmtxtest.mysatori.com/'</msg>
+<status status="PASS" endtime="20140527 11:33:40.437" starttime="20140527 11:33:33.642"></status>
+</kw>
+<status status="PASS" endtime="20140527 11:33:40.437" starttime="20140527 11:33:33.642"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>Maximize Browser Window</arg>
+</arguments>
+<status status="PASS" endtime="20140527 11:33:40.437" starttime="20140527 11:33:40.437"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>Delete All Cookies</arg>
+</arguments>
+<status status="PASS" endtime="20140527 11:33:40.437" starttime="20140527 11:33:40.437"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>wait for page load</arg>
+</arguments>
+<status status="PASS" endtime="20140527 11:33:40.437" starttime="20140527 11:33:40.437"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Wait Until Element Is Visible">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>${button.wizard.signIn}</arg>
+<arg>60s</arg>
+<arg>The application is not loaded properly.</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140527 11:33:44.602" level="FAIL">WebDriverException: Message: u'chrome not reachable\n  (Session info: chrome=35.0.1916.114)\n  (Driver info: chromedriver=2.9.248315,platform=Windows NT 6.1 SP1 x86_64)' </msg>
+<status status="FAIL" endtime="20140527 11:33:44.602" starttime="20140527 11:33:42.465"></status>
+</kw>
+<msg timestamp="20140527 11:33:44.602" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: WebDriverException: Message: u'chrome not reachable\n  (Session info: chrome=35.0.1916.114)\n  (Driver info: chromedriver=2.9.248315,platform=Windows NT 6.1 SP1 x86_64)' </msg>
+<msg timestamp="20140527 11:33:44.649" level="FAIL">WebDriverException: Message: u'chrome not reachable\n  (Session info: chrome=35.0.1916.114)\n  (Driver info: chromedriver=2.9.248315,platform=Windows NT 6.1 SP1 x86_64)' </msg>
+<status status="FAIL" endtime="20140527 11:33:44.649" starttime="20140527 11:33:40.437"></status>
+</kw>
+<status status="FAIL" endtime="20140527 11:33:44.649" starttime="20140527 11:33:33.626"></status>
+</kw>
+<status status="FAIL" endtime="20140527 11:33:44.649" starttime="20140527 11:33:33.626"></status>
+</kw>
+<kw type="teardown" name="global.Stop Application">
+<doc>1.Closes the browser</doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>closes the browser.</arg>
+</arguments>
+<status status="PASS" endtime="20140527 11:33:44.649" starttime="20140527 11:33:44.649"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Close Browser">
+<doc>Closes the current browser.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20140527 11:33:46.927" starttime="20140527 11:33:44.649"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${BROWSER}'=='ie'</arg>
+<arg>Process Close</arg>
+<arg>IEDriverServer.exe</arg>
+</arguments>
+<status status="PASS" endtime="20140527 11:33:46.927" starttime="20140527 11:33:46.927"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${BROWSER}'=='gc'</arg>
+<arg>Process Close</arg>
+<arg>chromedriver.exe</arg>
+</arguments>
+<kw type="kw" name="AutoItLibrary.Process Close">
+<doc>method ProcessClose</doc>
+<arguments>
+<arg>chromedriver.exe</arg>
+</arguments>
+<status status="PASS" endtime="20140527 11:33:46.942" starttime="20140527 11:33:46.927"></status>
+</kw>
+<status status="PASS" endtime="20140527 11:33:46.942" starttime="20140527 11:33:46.927"></status>
+</kw>
+<status status="PASS" endtime="20140527 11:33:46.942" starttime="20140527 11:33:44.649"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="FAIL" endtime="20140527 11:33:46.942" critical="yes" starttime="20140527 11:33:33.626">WebDriverException: Message: u'chrome not reachable\n  (Session info: chrome=35.0.1916.114)\n  (Driver info: chromedriver=2.9.248315,platform=Windows NT 6.1 SP1 x86_64)' </status>
+</test>
+<doc></doc>
+<metadata>
+</metadata>
+<status status="FAIL" endtime="20140527 11:33:46.958" starttime="20140527 11:33:33.268"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="1" pass="0">Critical Tests</stat>
+<stat fail="1" pass="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="1" pass="0" id="s1" name="Demo">Demo</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20140527 11:33:44.602" level="WARN">Keyword 'Capture Page Screenshot' could not be run on failure: WebDriverException: Message: u'chrome not reachable\n  (Session info: chrome=35.0.1916.114)\n  (Driver info: chromedriver=2.9.248315,platform=Windows NT 6.1 SP1 x86_64)' </msg>
+</errors>
+</robot>

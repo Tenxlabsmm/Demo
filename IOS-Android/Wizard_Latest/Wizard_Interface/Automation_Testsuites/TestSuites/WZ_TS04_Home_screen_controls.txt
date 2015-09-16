@@ -1,0 +1,46 @@
+*** Settings ***
+Resource          ../Keywords/super.txt
+
+*** Test Cases ***
+WZ_TC01_Validate home screen controls
+    [Documentation]    1.Open Wizard App.
+    ...    2.Enter instutor credentials as r.teacher/r.teacher.
+    ...    3.click on Sign In Button.
+    ...    4.Verifying that Home page should Contain More,Help,Support and SignOut Buttons or Not.
+    Comment    Login into Wizard App with Instructor Role.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${instructorUserID}    ${instructorPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Comment    Verifying visibility of  'Sign Out' Button at Home Page .
+    Run Keyword And Continue On Failure    Wait Until Element Is Visible    ${button.wizard.signOut}    10s    Home Screen doesnot Contains Sign Out button
+    Comment    Verifying visibility of  'Help' Button at Home Page.
+    Run Keyword And Continue On Failure    Wait Until Element Is Visible    ${button.home.help}    10s    Home Screen doesnot Contains Help button
+    Comment    Verifying Visibility of 'Support' Button at Home Page.
+    Run Keyword And Continue On Failure    Wait Until Element Is Visible    ${button.home.support}    10s    Home Screen doesnot Contains Support button
+    Comment    Verifying visibility of  'More' Button at Home Page.
+    Run Keyword And Continue On Failure    Wait Until Element Is Visible    ${button.home.more}    10s    Home Screen doesnot Contains More button
+    [Teardown]    Stop Application
+
+WZ_TC02_Validate Home Button
+    [Documentation]    1.Open Wizard App.
+    ...    2.Enter Instructor Credentials.
+    ...    3.Verifying visibility of Assignment button at home page.
+    ...    4.Click Assignment Button.
+    ...    5.Verify Home Screen Contains Home Button or Not.
+    ...    6.Click Home Button and Verifying the page redirect to Home Page or Not.
+    Comment    Login into Wizard App with Instructor Role.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${instructorUserID}    ${instructorPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Comment    Verifying Home Screen Contains 'Assignments' button Not.
+    ${assignmentBtnStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.home.assignments}    10s    Home Screen doesnot Contains 'Assignments' button
+    Comment    Clicking Assignment Button.
+    Run Keyword If    ${assignmentBtnStatus}==True    Click Element    ${button.home.assignments}
+    Sleep    5s
+    Comment    Verifying Home Screen Contains 'Home' button Not.
+    ${homeBtnStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.home.toolbar.home}    20s    Home Button is not available.
+    Comment    Clicking Home Button.
+    Run Keyword If    ${homeBtnStatus}==True    Click Element    ${button.home.toolbar.home}
+    Sleep    5s
+    Comment    Verifying avialability of Home Screen button.
+    ${homeStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.home.Home}    20s
+    Run Keyword If    ${homeStatus}!=True    Fail    Home Page is not displayed.
+    [Teardown]    Stop Application

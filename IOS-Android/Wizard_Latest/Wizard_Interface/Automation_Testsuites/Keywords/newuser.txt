@@ -1,0 +1,10 @@
+*** Settings ***
+Resource          super.txt
+
+*** Keywords ***
+validateThe MandatoryField
+    [Arguments]    ${field}
+    [Documentation]    Validates whether the specific 'field' is highlighted or not.
+    ${classAttributeValue}=    Get Element Attribute    widget_signUp${field}@class
+    ${highlightedStatus}=    String Should Contain    ${classAttributeValue}    signupFieldRedBorder
+    [Return]    ${highlightedStatus}

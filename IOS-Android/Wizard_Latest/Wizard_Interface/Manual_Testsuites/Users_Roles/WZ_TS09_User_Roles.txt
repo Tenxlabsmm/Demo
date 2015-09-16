@@ -1,0 +1,116 @@
+*** Test Cases ***
+WZ_TC06_Validate Add Functionality in Users table with Admin Role
+    [Documentation]    Validate Add Functionality in Users table with Admin Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-adminid , Password- adminpwd
+    Click on Classes and Users under More button
+    Click on User table
+    Click on Add button    \    Expected Result:New Users window should be displayed and Student, Instructor,School admin Role should be displayed
+    Enter all mandatory fields (First Name, Last Name, User ID, Password) and select a role to create a user.    \    Expected Result:Selected Role should be created
+
+WZ_TC07_Validate Delete Functionality in Users table with Admin Role
+    [Documentation]    Validate Delete Functionality in Users table with Admin Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-adminid , Password- adminpwd
+    Click on Classes and Users under More button
+    Cllick on Users table
+    Select any user(Admin, Instructor,Student) detail from the users table and click on Delete button    \    Expected Result:Validation message should be displayed as "Are you sure you want to delete the user 'admin' ?(user name)"
+    Click OK on the Validation Message    \    Expected Result:Selected user details should be deleted
+
+WZ_TC08_Validate Edit Functionality in Users table with Admin Role
+    [Documentation]    Validate Edit Functionality in Users table with Admin Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-adminid , Password- adminpwd
+    Click on Classes and Users under More button
+    Click on Users Details Table
+    Select any user details (admin, instructor, student) and click on Edit button in details table    \    Expected Result:Changes made to the roles should be saved
+
+WZ_TC09_Validate Add Functionality in Users table with Instructor Role
+    [Documentation]    Validate Add Functionality in Users table with Instructor Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-dteacher , Password- dteacher
+    Click on Classes and Users under More button
+    Cllick on Users table
+    Click on Add button    \    Expected Result:New Users window should be displayed and Student Role should be displayed
+    Enter all mandatory fields (First Name, Last Name, User ID, Password) and select a role to create a user.    \    Expected Result:Selected Role(Student) should be created
+
+WZ_TC10_Validate Delete Functionality in Users table with Instructor Role
+    [Documentation]    Validate Delete Functionality in Users table with Instructor Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-dteacher , Password- dteacher
+    Click on Classes and Users under More button
+    Cllick on Users table
+    Select any user other than student role and logged in user    \    Expected Result: Detele button should be in disable mode
+    Select any student role or logged in user and click on Delete button    \    Expected Result:Validation message is displayed as "Are you sure you want to delete the class 'adminclass2' ?(class name)"
+    Click ok on validation message    \    Expected result:Selected user should be deleted
+
+WZ_TC11_Validate Edit Functionality in Users table with Instructor Role
+    [Documentation]    Validate Edit Functionality in Users table with Instructor Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-dteacher , Password- dteacher
+    Click on Classes and Users under More button
+    Cllick on Users Details table
+    Select any user other than student role and logged in user    \    Expected Result: Edit button should be in disable mode
+    Select any student role or logged in user in users table and click on Edit button in Details table    \    Expected Result:Changes made to the roles should be saved
+
+WZ_TC012_Validate Edit Functionality at Class Frame in Users table with Instructor Role
+    [Documentation]    Validate Edit Functionality at Class Frame in Users table with Instructor Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-dteacher , Password- dteacher
+    Click on Classes and Users under More button
+    Select any student user or logged in user details and click on Edit button in details table
+    Click on Edit button of Class frame    \    Expected Result: New window should be displayed which consist of 1.Available Classes and Current user class tables
+    Click on save button    \    Expected Result:All the changes done to the user in Edit student's classes window should be saved
+
+WZ_TC013_Validate Edit Functionality in Class Frame in Users table with Admin Role
+    [Documentation]    Validate Edit Functionality in Class Frame in Users table with Admin Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-adminid , Password- adminpwd
+    Click on Classes and Users under More button
+    Select any user details and click on Edit button in details table
+    Click on Edit button of Class frame    \    Expected Result: New window should be displayed which consist of 1.Available Classes and Current user class tables
+    Click on save button    \    Expected Result:All the changes done to the user in Edit student's classes window should be saved
+
+WZ_TC014_Validate Show Password Functionality in Users table with Instructor Role
+    [Documentation]    Validate Show Password Functionality in Users table with Instructor Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-dteacher , Password- dteacher
+    Click on Classes and Users under More button
+    Select any user other than student user or logged in user and click on Show Password button in details table    \    Expected Result: User ID and Password fields should be displayed with field values as Astric(***)
+    Select any student user or logged in user details and click on Edit button in details table    \    Expected Result: Password of the selected user and Hide Password button should be displayed
+    Verify the Hide Password button    \    Expected Result: Show password button should be displayed in place of Hide password button with in 10 seconds
+
+WZ_TC015_Validate Show Password Functionality in Users table with Admin Role
+    [Documentation]    Validate Show Password Functionality in Users table with Admin Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-adminid , Password- adminpwd
+    Click on Classes and Users under More button
+    Select any user details and click on Show Password button in details table
+    Click on Edit button of Class frame    \    Expected Result: Password of the selected user and Hide Password button \ should be displayed
+
+WZ_TC01_Validate home screen controls with Student Role
+    [Documentation]    Validate home screen controls with Student Role
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Enter valid credentials    Test Data: User ID- r.student4, Password- r.student4
+    Click on Sign In button    \    Expected Result: Home Screen should be displayed with Help and Sign Out button
+
+WZ_TC02_Validate Delete functionality in Class table with Admin Role
+    [Documentation]    Validate Delete functionality in Class table with Admin Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-adminid , Password- adminpwd
+    Click on Classes and Users under More button
+    Cllick on Classes table
+    Select a class and click on Delete button    \    Expected Result:Validation message is displayed as "Are you sure you want to delete the class 'adminclass2' ?(class name)"
+    Click Ok on the validation Message    \    Expected Result:Selected class should be deleted
+
+WZ_TC03_Validate Edit functionality in Class table with Admin Role
+    [Documentation]    Validate Edit functionality in Class table with Admin Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-adminid , Password- adminpwd
+    Click on Classes and Users under More button
+    Select any class created by any user in class table and click on Edit button in details table
+    Modify the field values and Click on save button    \    Expected Result:All the changes done to the details table should be updated and saved
+
+WZ_TC04_Validate Delete functionality in Class table with Instructor Role
+    [Documentation]    Validate Delete functionality in Class table with Instructor Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-dteacher , Password- dteacher
+    Click on Classes and Users under More button
+    Cllick on Classes table
+    Select a class created by admin, or any other instructor other than logged in user    \    Expected Result: Delete button should be in disable mode
+    Select a class created by logged in user and click on Delete button    \    Expected Result:Validation message is displayed as "Are you sure you want to delete the class 'adminclass2' ?(class name)"
+    Click Ok on the validation Message    \    Expected Result:Selected class should be deleted
+
+WZ_TC05_Validate Edit functionality in Class table with Instructor Role
+    [Documentation]    Validate Edit functionality in Class table with Instructor Role
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID-dteacher , Password- dteacher
+    Click on Classes and Users under More button
+    Select a class created by logged in user in class table and click on Edit button in details table
+    Modify the field values and Click on save button    \    Expected Result:All the changes done to the details table should be updated and saved

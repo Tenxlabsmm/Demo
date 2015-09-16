@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20140526 11:49:34.714" generator="Robot 2.8.4 (Python 2.7.6 on win32)">
+<suite source="C:\Wizard_Latest\Wizard_Interface\Automation_Testsuites\TestSuites\Demo.txt" id="s1" name="Demo">
+<test id="s1-t1" name="Wizard_Login">
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>Login to Wizard appplication with valid credentials of student.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:49:37.148" starttime="20140526 11:49:37.148"></status>
+</kw>
+<kw type="kw" name="${loginStatus} = login.LoginToApplication">
+<doc>Keyword is Used to Login into the Application.</doc>
+<arguments>
+<arg>${WizardURL}</arg>
+<arg>${BROWSER}</arg>
+<arg>${studentUserID}</arg>
+<arg>${studentPassword}</arg>
+</arguments>
+<kw type="kw" name="${loginStatus} = BuiltIn.Set Variable">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>False</arg>
+</arguments>
+<msg timestamp="20140526 11:49:37.164" level="INFO">${loginStatus} = False</msg>
+<status status="PASS" endtime="20140526 11:49:37.164" starttime="20140526 11:49:37.164"></status>
+</kw>
+<kw type="kw" name="login.OpenBrowserToLoginPage">
+<doc>Keyword is Used to Open the browser with given 'URL'.</doc>
+<arguments>
+<arg>${URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${SauceLabs_Connect}'=='Yes'</arg>
+<arg>Open Browser</arg>
+<arg>${url}</arg>
+<arg>${Browser}</arg>
+<arg>remote_url=${SELENIUM HOST}</arg>
+<arg>desired_capabilities=${DESIRED_CAPABILITIES}</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:49:37.164" starttime="20140526 11:49:37.164"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${SauceLabs_Connect}'=='No'</arg>
+<arg>Open Browser</arg>
+<arg>${url}</arg>
+<arg>${Browser}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Open Browser">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${url}</arg>
+<arg>${Browser}</arg>
+</arguments>
+<msg timestamp="20140526 11:49:37.164" level="INFO">Opening browser 'gc' to base url 'http://mmtxtest.mysatori.com/'</msg>
+<status status="PASS" endtime="20140526 11:49:58.484" starttime="20140526 11:49:37.164"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:49:58.485" starttime="20140526 11:49:37.164"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Maximize Browser Window">
+<doc>Maximizes current browser window.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20140526 11:49:58.685" starttime="20140526 11:49:58.485"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Delete All Cookies">
+<doc>Deletes all cookies.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20140526 11:49:58.799" starttime="20140526 11:49:58.686"></status>
+</kw>
+<kw type="kw" name="login.wait for page load">
+<doc>Keyword is used to wait upto login Page loading.</doc>
+<arguments>
+</arguments>
+<kw type="for" name="${iCounter} IN RANGE [ 1 | 10 ]">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="foritem" name="${iCounter} = 1">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="${st} = BuiltIn.Run Keyword And Return Status">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Wait Until Element Is Visible</arg>
+<arg>//div[@id='loader']//div[@id='loaderInner']</arg>
+<arg>10s</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Wait Until Element Is Visible">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>//div[@id='loader']//div[@id='loaderInner']</arg>
+<arg>10s</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:49:59.018" starttime="20140526 11:49:58.803"></status>
+</kw>
+<msg timestamp="20140526 11:49:59.018" level="INFO">${st} = True</msg>
+<status status="PASS" endtime="20140526 11:49:59.018" starttime="20140526 11:49:58.802"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>${st}==True</arg>
+<arg>Capture Page Screenshot</arg>
+<arg>Loadingpage.png</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+<arg>Loadingpage.png</arg>
+</arguments>
+<msg timestamp="20140526 11:49:59.218" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="Loadingpage.png"&gt;&lt;img src="Loadingpage.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20140526 11:49:59.218" starttime="20140526 11:49:59.020"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:49:59.218" starttime="20140526 11:49:59.019"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>${st}==False</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:49:59.219" starttime="20140526 11:49:59.219"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Sleep">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5s</arg>
+</arguments>
+<msg timestamp="20140526 11:50:04.220" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" endtime="20140526 11:50:04.220" starttime="20140526 11:49:59.220"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:50:04.220" starttime="20140526 11:49:58.802"></status>
+</kw>
+<kw type="foritem" name="${iCounter} = 2">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="${st} = BuiltIn.Run Keyword And Return Status">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Wait Until Element Is Visible</arg>
+<arg>//div[@id='loader']//div[@id='loaderInner']</arg>
+<arg>10s</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Wait Until Element Is Visible">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>//div[@id='loader']//div[@id='loaderInner']</arg>
+<arg>10s</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140526 11:50:14.608" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-1.png"&gt;&lt;img src="selenium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20140526 11:50:14.608" starttime="20140526 11:50:14.389"></status>
+</kw>
+<msg timestamp="20140526 11:50:14.654" level="FAIL">Element '//div[@id='loader']//div[@id='loaderInner']' was not visible in 10 seconds</msg>
+<status status="FAIL" endtime="20140526 11:50:14.654" starttime="20140526 11:50:04.222"></status>
+</kw>
+<msg timestamp="20140526 11:50:14.654" level="INFO">${st} = False</msg>
+<status status="PASS" endtime="20140526 11:50:14.654" starttime="20140526 11:50:04.221"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>${st}==True</arg>
+<arg>Capture Page Screenshot</arg>
+<arg>Loadingpage.png</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:14.654" starttime="20140526 11:50:14.654"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>${st}==False</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<kw type="kw" name="BuiltIn.Exit For Loop">
+<doc>Stops executing the enclosing for loop.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140526 11:50:14.654" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" endtime="20140526 11:50:14.654" starttime="20140526 11:50:14.654"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:50:14.654" starttime="20140526 11:50:14.654"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:50:14.654" starttime="20140526 11:50:04.220"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:50:14.654" starttime="20140526 11:49:58.802"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:50:14.654" starttime="20140526 11:49:58.799"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Wait Until Page Contains Element">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>${button.wizard.signIn}</arg>
+<arg>15s</arg>
+<arg>The application is not loaded properly.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:14.670" starttime="20140526 11:50:14.654"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:50:14.670" starttime="20140526 11:49:37.164"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>Enters the login details &amp; click on 'SignIn' button.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:14.670" starttime="20140526 11:50:14.670"></status>
+</kw>
+<kw type="kw" name="login.Enter Login Details">
+<doc>This Keyword is Used to Enter the User Credentials &amp; clicks on the 'Sign-IN' button.</doc>
+<arguments>
+<arg>${userID}</arg>
+<arg>${password}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Wait Until Page Contains Element">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>${text.wizard.userID}</arg>
+<arg>15s</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:14.701" starttime="20140526 11:50:14.686"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Input Text">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>${text.wizard.userID}</arg>
+<arg>${userName}</arg>
+</arguments>
+<msg timestamp="20140526 11:50:14.701" level="INFO">Typing text 'r.student4' into text field 'loginUserID'</msg>
+<status status="PASS" endtime="20140526 11:50:15.016" starttime="20140526 11:50:14.701"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Sleep">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>1s</arg>
+</arguments>
+<msg timestamp="20140526 11:50:16.017" level="INFO">Slept 1 second</msg>
+<status status="PASS" endtime="20140526 11:50:16.017" starttime="20140526 11:50:15.017"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Input Password">
+<doc>Types the given password into text field identified by `locator`.</doc>
+<arguments>
+<arg>${text.wizard.password}</arg>
+<arg>${password}</arg>
+</arguments>
+<msg timestamp="20140526 11:50:16.018" level="INFO">Typing password into text field 'userPasswd'</msg>
+<status status="PASS" endtime="20140526 11:50:16.252" starttime="20140526 11:50:16.018"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Sleep">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>5</arg>
+</arguments>
+<msg timestamp="20140526 11:50:21.253" level="INFO">Slept 5 seconds</msg>
+<status status="PASS" endtime="20140526 11:50:21.253" starttime="20140526 11:50:16.253"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Wait Until Page Contains Element">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>${button.wizard.signIn}</arg>
+<arg>15s</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:21.267" starttime="20140526 11:50:21.254"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${button.wizard.signIn}</arg>
+</arguments>
+<msg timestamp="20140526 11:50:21.268" level="INFO">Clicking element '//button[contains(text(),'Sign In')]'.</msg>
+<status status="PASS" endtime="20140526 11:50:21.388" starttime="20140526 11:50:21.268"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Sleep">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>15s</arg>
+</arguments>
+<msg timestamp="20140526 11:50:36.389" level="INFO">Slept 15 seconds</msg>
+<status status="PASS" endtime="20140526 11:50:36.389" starttime="20140526 11:50:21.388"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:50:36.389" starttime="20140526 11:50:14.670"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>Checks whether alert message is displayed or not. If displayed, reads the alert message.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:36.390" starttime="20140526 11:50:36.390"></status>
+</kw>
+<kw type="kw" name="@{list} = CommonLibrary.Get Alert Message">
+<doc>Returns 'True'if any alert message displayed returns 'False' if not</doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140526 11:50:36.587" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-2.png"&gt;&lt;img src="selenium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20140526 11:50:36.587" starttime="20140526 11:50:36.398"></status>
+</kw>
+<msg timestamp="20140526 11:50:36.588" level="INFO">@{list} = [ False |  ]</msg>
+<status status="PASS" endtime="20140526 11:50:36.588" starttime="20140526 11:50:36.391"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>Verifying wether the Browser Validaton pop up window is displayed or Not.If it displayed clicks on 'OK' Button</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:36.588" starttime="20140526 11:50:36.588"></status>
+</kw>
+<kw type="kw" name="${bStatus} = BuiltIn.Run Keyword And Return Status">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Wait Until Element Is Visible</arg>
+<arg>${label.login.browserValidation}</arg>
+<arg>10s</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Wait Until Element Is Visible">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>${label.login.browserValidation}</arg>
+<arg>10s</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Capture Page Screenshot">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140526 11:50:46.922" html="yes" level="INFO">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-3.png"&gt;&lt;img src="selenium-screenshot-3.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" endtime="20140526 11:50:46.922" starttime="20140526 11:50:46.695"></status>
+</kw>
+<msg timestamp="20140526 11:50:46.923" level="FAIL">Element locator '//div[@id='browserValidationDlg']' did not match any elements after 10 seconds</msg>
+<status status="FAIL" endtime="20140526 11:50:46.923" starttime="20140526 11:50:36.590"></status>
+</kw>
+<msg timestamp="20140526 11:50:46.923" level="INFO">${bStatus} = False</msg>
+<status status="PASS" endtime="20140526 11:50:46.923" starttime="20140526 11:50:36.589"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>${bStatus}==True</arg>
+<arg>Click Element</arg>
+<arg>${button.browserValidation.Ok}</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:46.924" starttime="20140526 11:50:46.924"></status>
+</kw>
+<kw type="kw" name="${alertStatus} = BuiltIn.Convert To Boolean">
+<doc>Converts the given item to Boolean true or false.</doc>
+<arguments>
+<arg>@{list}[0]</arg>
+</arguments>
+<msg timestamp="20140526 11:50:46.925" level="INFO">Argument types are:
+&lt;type 'bool'&gt;</msg>
+<msg timestamp="20140526 11:50:46.925" level="INFO">${alertStatus} = False</msg>
+<status status="PASS" endtime="20140526 11:50:46.925" starttime="20140526 11:50:46.925"></status>
+</kw>
+<kw type="kw" name="${signoutStatus} = BuiltIn.Run Keyword And Return Status">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Wait Until Element Is Visible</arg>
+<arg>${button.wizard.signOut}</arg>
+<arg>15s</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Wait Until Element Is Visible">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>${button.wizard.signOut}</arg>
+<arg>15s</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:46.981" starttime="20140526 11:50:46.927"></status>
+</kw>
+<msg timestamp="20140526 11:50:46.981" level="INFO">${signoutStatus} = True</msg>
+<status status="PASS" endtime="20140526 11:50:46.981" starttime="20140526 11:50:46.926"></status>
+</kw>
+<kw type="kw" name="${loginStatus} = BuiltIn.Evaluate">
+<doc>Evaluates the given expression in Python and returns the results.</doc>
+<arguments>
+<arg>${alertStatus}==False and ${signoutStatus}==True</arg>
+</arguments>
+<msg timestamp="20140526 11:50:46.982" level="INFO">${loginStatus} = True</msg>
+<status status="PASS" endtime="20140526 11:50:46.982" starttime="20140526 11:50:46.981"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Set Global Variable">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${alertText}</arg>
+<arg>@{list}[1]</arg>
+</arguments>
+<msg timestamp="20140526 11:50:46.983" level="INFO">${alertText} = </msg>
+<status status="PASS" endtime="20140526 11:50:46.983" starttime="20140526 11:50:46.983"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Set Global Variable">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${alertStatus}</arg>
+<arg>${alertStatus}</arg>
+</arguments>
+<msg timestamp="20140526 11:50:46.984" level="INFO">${alertStatus} = False</msg>
+<status status="PASS" endtime="20140526 11:50:46.984" starttime="20140526 11:50:46.984"></status>
+</kw>
+<msg timestamp="20140526 11:50:46.985" level="INFO">${loginStatus} = True</msg>
+<status status="PASS" endtime="20140526 11:50:46.985" starttime="20140526 11:49:37.148"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>Fails,if the user is not able to login with the valid credentials.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:46.986" starttime="20140526 11:50:46.986"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>${loginStatus}==False</arg>
+<arg>Fail</arg>
+<arg>The user is not able to login with valid credentials.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:46.987" starttime="20140526 11:50:46.987"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>Fails,if alert messsage is displayed after logging into the wizard.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:46.988" starttime="20140526 11:50:46.988"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>${loginStatus}==True and ${alertStatus}==True</arg>
+<arg>Fail</arg>
+<arg>The alert message is displayed after loging into wizard with valid credentials.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:46.989" starttime="20140526 11:50:46.988"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>Verifying whether the Home Page is displyed or Not.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:46.990" starttime="20140526 11:50:46.990"></status>
+</kw>
+<kw type="kw" name="${pageTitle} = Selenium2Library.Get Title">
+<doc>Returns title of current page.</doc>
+<arguments>
+</arguments>
+<msg timestamp="20140526 11:50:46.998" level="INFO">${pageTitle} = Mentoring Minds</msg>
+<status status="PASS" endtime="20140526 11:50:46.998" starttime="20140526 11:50:46.990"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${pageTitle}'!='Mentoring Minds'</arg>
+<arg>Fail</arg>
+<arg>The page '${pageTitle}' is displayed inspite of 'MentoringMinds' .</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:46.999" starttime="20140526 11:50:46.999"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>Verifying whether loginName of the user is displayed or not.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:47.000" starttime="20140526 11:50:47.000"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Wait Until Element Is Visible">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>${label.wizard.loginName}</arg>
+<arg>30s</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:47.051" starttime="20140526 11:50:47.001"></status>
+</kw>
+<kw type="kw" name="${loginName} = Selenium2Library.Get Text">
+<doc>Returns the text value of element identified by `locator`.</doc>
+<arguments>
+<arg>${label.wizard.loginName}</arg>
+</arguments>
+<msg timestamp="20140526 11:50:47.113" level="INFO">${loginName} = Student: student4 r</msg>
+<status status="PASS" endtime="20140526 11:50:47.113" starttime="20140526 11:50:47.052"></status>
+</kw>
+<kw type="kw" name="${bLoginNameStatus} = BuiltIn.Run Keyword And Return Status">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Should Contain</arg>
+<arg>${loginName}</arg>
+<arg>student4 r</arg>
+</arguments>
+<kw type="kw" name="BuiltIn.Should Contain">
+<doc>Fails if `item1` does not contain `item2` one or more times.</doc>
+<arguments>
+<arg>${loginName}</arg>
+<arg>student4 r</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:47.115" starttime="20140526 11:50:47.115"></status>
+</kw>
+<msg timestamp="20140526 11:50:47.116" level="INFO">${bLoginNameStatus} = True</msg>
+<status status="PASS" endtime="20140526 11:50:47.115" starttime="20140526 11:50:47.114"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${bLoginNameStatus}'!='True'</arg>
+<arg>Fail</arg>
+<arg>The Actual UserName Mismatches with Expected UserName.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:47.117" starttime="20140526 11:50:47.116"></status>
+</kw>
+<kw type="teardown" name="global.Stop Application">
+<doc>1.Closes the browser</doc>
+<arguments>
+</arguments>
+<kw type="kw" name="BuiltIn.Comment">
+<doc>Displays the given messages in the log file as keyword arguments.</doc>
+<arguments>
+<arg>closes the browser.</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:47.120" starttime="20140526 11:50:47.120"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Close Browser">
+<doc>Closes the current browser.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:50.201" starttime="20140526 11:50:47.121"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${BROWSER}'=='ie'</arg>
+<arg>Process Close</arg>
+<arg>IEDriverServer.exe</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:50.201" starttime="20140526 11:50:50.201"></status>
+</kw>
+<kw type="kw" name="BuiltIn.Run Keyword If">
+<doc>Runs the given keyword with the given arguments, if `condition` is true.</doc>
+<arguments>
+<arg>'${BROWSER}'=='gc'</arg>
+<arg>Process Close</arg>
+<arg>chromedriver.exe</arg>
+</arguments>
+<kw type="kw" name="AutoItLibrary.Process Close">
+<doc>method ProcessClose</doc>
+<arguments>
+<arg>chromedriver.exe</arg>
+</arguments>
+<status status="PASS" endtime="20140526 11:50:50.216" starttime="20140526 11:50:50.201"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:50:50.216" starttime="20140526 11:50:50.201"></status>
+</kw>
+<status status="PASS" endtime="20140526 11:50:50.216" starttime="20140526 11:50:47.117"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20140526 11:50:50.216" critical="yes" starttime="20140526 11:49:37.148"></status>
+</test>
+<doc></doc>
+<metadata>
+</metadata>
+<status status="PASS" endtime="20140526 11:50:50.232" starttime="20140526 11:49:34.714"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="1">Critical Tests</stat>
+<stat fail="0" pass="1">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" pass="1" id="s1" name="Demo">Demo</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

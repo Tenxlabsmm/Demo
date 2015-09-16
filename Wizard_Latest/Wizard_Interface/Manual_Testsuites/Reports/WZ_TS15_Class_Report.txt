@@ -1,0 +1,66 @@
+*** Test Cases ***
+WZ_TC01_Validate Class Report
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID:adminid,Password:adminpwd
+    Click On Reports Button
+    Click On Class Report
+    Select a class from Class drop down list
+    Select Subject from subject drop down list    \    Expected Result: Report should be displayed for the selected Assignments
+
+WZ_TC02_Validate Standard Abbreviation in Class Report
+    [Documentation]    Validate Standard Abbrivation in Class Report when mouse overed
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Reports Button
+    Click On Class Report
+    Select a class and subject from drop down list
+    Verify the Class Report    \    Expected Result: Standard Abbreviation should be displayed for the selected Assignments
+    Mouse over on the Standard Abbreviation    \    Expected Result: Tool tip should be displayed with the full wording of the standard abbreviations
+
+WZ_TC03_Validate Scores in Class Report
+    [Documentation]    Validate Scores in Class Report of assigned students who wrote the exams
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Reports Button
+    Click On Class Report
+    Select a class and subject from drop down list
+    Verify the Class Report    \    Expected Result: Class report of the student should be displayed with the pie chart
+    Mouse Over on the student Pie Chart    \    Expected Result: Tool tip should display the score of the selected assignment, Red colour pie chart should not display the score as '100' and Green colour pie chart should display the score as '100'
+
+WZ_TC04_Validate Show Scores Functionality in Class Report
+    [Documentation]    Validate Show Scores Functionality in Class Report
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Reports Button
+    Click On Class Report
+    Select a class and subject from drop down list
+    Verify the Class Report
+    Click on Show Scores button    \    Expected Result: Hide scores button and Scores of all the students should be displayed in Numeric format
+    Click on Hide Scores button    \    Expected Result: Scores of all the students should be displayed in Pie Chart format
+
+WZ_TC05_Validate Grade,Print and Download Functionality in Class Report
+    [Documentation]    Validate Grade,Print and Download Functionality in Class Report
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Reports Button
+    Click On Class Report
+    Select a class and subject from drop down list
+    Verify the Class Report
+    Click on Grade[0] button    \    Expected Result: "There are no items to Grade" validation message should be displayed
+    Click on Print    \    Expected Result: Student 'Class Report' page should be printed
+    Click on Download    \    Expected Result: Student 'Class Report' page should be downloaded
+
+WZ_TC06_Validate Sort By Name Functionality in Class Report
+    [Documentation]    Validate Sort By Name Functionality in Class Report
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Reports Button
+    Click On Class Report
+    Select a class and subject from drop down list
+    Verify the Class Report
+    Click on Sort By Name Button    \    Expected Result: Students Name should be displayed in Alphabetic Order
+    Click on Sort By Score    \    Expected Result: Students Name should be displayed based on the scores
+
+WZ_TC07_Validate '+', '-' symbol Functionality in Class Report
+    [Documentation]    Validate '+', '-' symbol Functionality in Class Report
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Reports Button
+    Click On Class Report
+    Select a class and subject from drop down list
+    Verify the Class Report
+    Click on '-' symbol \ of selected class name    \    Expected Result: All the student details of the selected class should be hiden
+    Click on '+' symbol \ of selected class name    \    Expected Result: All the student details of the selected class should be displayed

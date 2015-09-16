@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20140517 09:57:00.497" generator="Robot 2.8.4 (Python 2.7.6 on win32)">
+<suite source="C:\Users\Administrator\Desktop\RF_Test_Local\tests" id="s1" name="Tests">
+<suite source="C:\Users\Administrator\Desktop\RF_Test_Local\tests\valid_login.txt" id="s1-s1" name="Valid Login">
+<test id="s1-s1-t1" name="Valid Login">
+<kw type="kw" name="resource.Open Login Page">
+<doc>Maximize Browser Window</doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Open Browser">
+<doc>Opens a new browser instance to given URL.</doc>
+<arguments>
+<arg>${LOGIN URL}</arg>
+<arg>${BROWSER}</arg>
+</arguments>
+<msg timestamp="20140517 09:57:01.417" level="INFO">Opening browser 'ff' to base url 'https://saucelabs.com/login'</msg>
+<status status="PASS" endtime="20140517 09:57:17.284" starttime="20140517 09:57:01.417"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Set Selenium Speed">
+<doc>Sets the delay in seconds that is waited after each Selenium command.</doc>
+<arguments>
+<arg>${DELAY}</arg>
+</arguments>
+<status status="PASS" endtime="20140517 09:57:17.284" starttime="20140517 09:57:17.284"></status>
+</kw>
+<status status="PASS" endtime="20140517 09:57:17.284" starttime="20140517 09:57:01.417"></status>
+</kw>
+<kw type="kw" name="resource.Input Username">
+<doc></doc>
+<arguments>
+<arg>${VALID USER}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Text">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>username</arg>
+<arg>${username}</arg>
+</arguments>
+<msg timestamp="20140517 09:57:17.300" level="INFO">Typing text 'Rafikhan29' into text field 'username'</msg>
+<status status="PASS" endtime="20140517 09:57:18.439" starttime="20140517 09:57:17.300"></status>
+</kw>
+<status status="PASS" endtime="20140517 09:57:18.439" starttime="20140517 09:57:17.300"></status>
+</kw>
+<kw type="kw" name="resource.Input Password">
+<doc></doc>
+<arguments>
+<arg>${VALID PASSWD}</arg>
+</arguments>
+<kw type="kw" name="Selenium2Library.Input Text">
+<doc>Types the given `text` into text field identified by `locator`.</doc>
+<arguments>
+<arg>password</arg>
+<arg>${password}</arg>
+</arguments>
+<msg timestamp="20140517 09:57:18.454" level="INFO">Typing text 'Saucelabs' into text field 'password'</msg>
+<status status="PASS" endtime="20140517 09:57:18.564" starttime="20140517 09:57:18.454"></status>
+</kw>
+<status status="PASS" endtime="20140517 09:57:18.564" starttime="20140517 09:57:18.454"></status>
+</kw>
+<kw type="kw" name="resource.Submit Credentials">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Click Element">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>submit</arg>
+</arguments>
+<msg timestamp="20140517 09:57:18.579" level="INFO">Clicking element 'submit'.</msg>
+<status status="PASS" endtime="20140517 09:57:29.062" starttime="20140517 09:57:18.579"></status>
+</kw>
+<status status="PASS" endtime="20140517 09:57:29.062" starttime="20140517 09:57:18.579"></status>
+</kw>
+<kw type="kw" name="resource.Verify Login">
+<doc></doc>
+<arguments>
+</arguments>
+<kw type="kw" name="Selenium2Library.Wait Until Page Contains Element">
+<doc>Waits until element specified with `locator` appears on current page.</doc>
+<arguments>
+<arg>summarySection</arg>
+<arg>30s</arg>
+<arg>WELCOME</arg>
+</arguments>
+<status status="PASS" endtime="20140517 09:57:29.577" starttime="20140517 09:57:29.062"></status>
+</kw>
+<kw type="kw" name="Selenium2Library.Title Should Be">
+<doc>Verifies that current page title equals `title`.</doc>
+<arguments>
+<arg>Sauce Labs</arg>
+</arguments>
+<msg timestamp="20140517 09:57:29.593" level="INFO">Page title is 'Sauce Labs'.</msg>
+<status status="PASS" endtime="20140517 09:57:29.593" starttime="20140517 09:57:29.577"></status>
+</kw>
+<status status="PASS" endtime="20140517 09:57:29.593" starttime="20140517 09:57:29.062"></status>
+</kw>
+<kw type="teardown" name="Selenium2Library.Close Browser">
+<doc>Closes the current browser.</doc>
+<arguments>
+</arguments>
+<status status="PASS" endtime="20140517 09:57:29.874" starttime="20140517 09:57:29.593"></status>
+</kw>
+<doc></doc>
+<tags>
+</tags>
+<status status="PASS" endtime="20140517 09:57:29.874" critical="yes" starttime="20140517 09:57:01.417"></status>
+</test>
+<doc>A test suite with a single test for valid login. This test has a workflow that is created using keywords from the resource file.</doc>
+<metadata>
+</metadata>
+<status status="PASS" endtime="20140517 09:57:29.874" starttime="20140517 09:57:00.590"></status>
+</suite>
+<doc></doc>
+<metadata>
+</metadata>
+<status status="PASS" endtime="20140517 09:57:29.874" starttime="20140517 09:57:00.497"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="0" pass="1">Critical Tests</stat>
+<stat fail="0" pass="1">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="0" pass="1" id="s1" name="Tests">Tests</stat>
+<stat fail="0" pass="1" id="s1-s1" name="Valid Login">Tests.Valid Login</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

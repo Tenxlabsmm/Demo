@@ -1,0 +1,214 @@
+*** Settings ***
+Resource          ../Keywords/super.txt
+
+*** Test Cases ***
+WZ_TC01_Validate Users Table
+    [Documentation]    1.Login to wizard app as an admin.
+    ...    2.Click on the 'Classes & Users' button.
+    ...    3.Select an user from the 'Users' table & verify whether the selected user appears in the 'UserDetail' window or not.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on 'Classes & Users' button.
+    Sleep    3s
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    30s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Comment    Wait for the 'Users' table to load & \ select an user from it.
+    Select Frame    iframeSchoolAdmin
+    Wait Until Element Is Visible    ${table.users}    30s    The 'UsersGrid' is not visible.
+    ${exportButtonStatus}=    Verify Element Visible    exportUsersBtn
+    ${newUserButtonStatus}=    Run Keyword If    ${exportButtonStatus}==True    Verify Element Visible    newUserBtn    ELSE    Set Test Message
+    ...    The 'Export' button in 'Users' table is not visible.
+    ${bStatus}=    Run Keyword If    ${newUserButtonStatus}==True    Common.Select The Row    ${table.users}    1    ELSE
+    ...    Set Test Message    The 'Add' button on 'Users' table is not visible.
+    Run Keyword And Continue On Failure    Run Keyword If    ${bStatus}!=True    Fail    The row is not selected in the 'Users' table.
+    Sleep    5s
+    Comment    Validate whether selected User details are displayed in the 'classDetails' window or not.
+    ${firstName}=    Get Table Cell Value    ${table.users}    1    First Name
+    ${lastName}=    Get Table Cell Value    ${table.users}    1    Last Name
+    ${userFirstName}=    Get Value    userFirstName
+    ${userLastName}=    Get Value    userLastName
+    Run Keyword If    "${firstName}"!="${userFirstName}" or "${lastName}"!="${userLastName}"    Fail    The selected user details are not displayed properly in the 'UserDetails' window.
+    [Teardown]    Stop Application
+
+WZ_TC02_Validate Export Functionality in Users Table
+    [Documentation]    1)The test case is incompleted. Because, the export button is not functioning.
+    Comment    The test case is incompleted.Because the export button is not functioning.
+    Fail    The test case is incompleted.Because the export button is not functioning.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    dteacher    dteacher
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on 'Classes & Users' button.
+    Sleep    3s
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    30s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Comment    Wait for the 'Users' table to load & select an user from it.
+    Select Frame    iframeSchoolAdmin
+    Wait Until Element Is Visible    ${table.users}    30s    The 'UsersGrid' is not visible.
+    Sleep    3s
+    ${exportButtonStatus}=    Verify Element Visible    exportUsersBtn
+    Run Keyword If    ${exportButtonStatus}==True    Click Element    exportUsersBtn    ELSE    Fail    The 'Export' button is not visible.
+
+WZ_TC03_Validate Add Functionality with out mandatory fields
+    [Documentation]    1.Login to wizrd app as an admin.
+    ...    2.Click on the 'Classes & Users'
+    ...    3.Click on the 'Add' button of the 'Users' table, a 'New User' window should appear.
+    ...    4.Try to click 'Ok' button of the 'NewUser' window without entering mandatory fields , you will get an alert message
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Sleep    3s
+    Comment    Click on 'Classes & Users' button.
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    20s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Select Frame    iframeSchoolAdmin
+    Comment    Users table should appear with 'add' button on it.
+    Wait Until Element Is Visible    ${table.users}    30s    The 'UsersGrid' is not visible.
+    Wait Until Element Is Visible    newUserBtn    30s    The 'Add' button on the 'Users' table is not visible.
+    Click Element    newUserBtn
+    Sleep    5s
+    Comment    Verifying the visibility of New User window.
+    ${newUserWindowStatus}=    Verify Element Visible    ${label.newUser.newUser}
+    Run Keyword If    ${newUserWindowStatus}==True    Wait Until Element Is Visible    newUserOK_label    30s    ELSE    Set Test Message
+    ...    The 'New User' window is not visible.
+    Click Element    newUserOK_label
+    Sleep    2s
+    Comment    Validate the 'alert Message'
+    @{list}=    CommonLibrary.Get Alert Message
+    ${alertStatus}=    Convert To Boolean    @{list}[0]
+    ${alertMessage}=    Run Keyword If    ${alertStatus}==True    Set Variable    @{list}[1]    ELSE    Fail
+    ...    The 'AlertMessage' is not visible.
+    ${expectedMessage}=    Set Variable    Some fields are not valid.
+    Should Be Equal As Strings    ${alertMessage}    ${expectedMessage}    The alertMesssage '${alertMessage}' mismatches with the expected one '${expectedMessage}'.
+    [Teardown]    Stop Application
+
+WZ_TC04_Validate Inactive Functionality in Edit Details table
+    [Documentation]    1. Login to wizard as an admin.
+    ...    2.SElect an user from "classes" table.
+    ...    3.Change the state of the user to inactive.
+    ...    4.Try to login with that user credentials, error msg should appear.
+    ...    5.Again change the status of the user to active, by logging in as an admin.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on 'Classes & Users' button.
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    30s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Comment    Change the status of the user to "InActive"
+    Change Status Of User    a    a    Instructor    inactive
+    Close Browser
+    Comment    Validate whether the "Inactive" user is not able to login or not.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${userId}    ${password}
+    Run Keyword If    ${loginStatus}==True    Fail    The user is able to login if we change the status to 'inactive'.
+    ${expectedMessage}=    Run Keyword If    ${alertStatus}!=True    Fail    The alert message is not vissible    ELSE    Set Variable
+    ...    This account is set to "inactive" which prevents logins. Please ask your Instructor or School Admin to make it "active".
+    Comment    Validate the erropr msg which appears, when we try login to the app with inactive credentials.
+    Run Keyword And Continue On Failure    Should Be Equal As Strings    ${alertText}    ${expectedMessage}    The actual string mismatches with the expected one.
+    Comment    Relogin as an admin
+    Enter Login Details    ${adminUserID}    ${adminPassword}
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on 'Classes & Users' button.
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    30s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    Comment    again change the status of the same user as "Active"
+    Change Status Of User    a    a    Instructor    active
+    [Teardown]    Stop Application
+
+WZ_TC05_Validate Expand and Collapse functionality in Users Details table
+    [Documentation]    1.Login to wizard as an admin.
+    ...    2.Click on the 'Classes & Users' button.
+    ...    3. Click on the 'ExpandOrColapse' button of the 'Users' table, then 'Detail' window should appear
+    ...    4.Again click on the 'ExpandOrColapse' button of the 'Users' table, then 'Detail' window should close.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on 'Classes & Users' button.
+    Sleep    3s
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    30s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Select Frame    iframeSchoolAdmin
+    Sleep    5s
+    Comment    Click on the 'ExpandOrColapse' button of the 'Users' table..
+    Wait Until Element Is Visible    userGrid    30s    The 'Users' table is not visible.
+    Wait Until Element Is Visible    ${button.users.expandOrCollapse}    30s    The 'ExpandOrCollapse' button is not visible.
+    Click Element    ${button.users.expandOrCollapse}
+    Sleep    2s
+    Comment    Validate whether 'Detail' window is opened or not.
+    ${expandStatus}=    Get Element Attribute    ${table.user.splitter}@aria-expanded
+    Run Keyword If    "${expandStatus}"!="true"    Fail    The 'UsersDetail' window is not appeared.
+    Comment    Click on the 'ExpandOrColapse' button of the 'Classes & Groups' window.
+    Click Element    ${button.users.expandOrCollapse}
+    Sleep    2s
+    Comment    Validate whether 'Detail' window is closed or not.
+    ${expandStatus}=    Get Element Attribute    ${table.user.splitter}@aria-expanded
+    Run Keyword If    "${expandStatus}"!="false"    Fail    The 'UserDetail' window is not closed after clicking "ExpandOrCollapse" button again.
+    [Teardown]    Stop Application
+
+WZ_TC06_Validate Cancel Functionality in Details table
+    [Documentation]    1.Login to wizrd as an admin.
+    ...    2.Click on the 'Classes & Users' button.
+    ...    3.Select a user & click on the 'edit' button of the 'User Details'.
+    ...    4.Modify the fields & click on the 'Cancel' button.
+    ...    5.Verify the modified fields are saved or not
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Sleep    30s
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on 'Classes & Users' button.
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    30s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    sleep    30s
+    Select Frame    iframeSchoolAdmin
+    Wait Until Element Is Visible    ${table.users}    30s    The 'Users and Students' Table is not visible.
+    Comment    Select a row from Users table
+    ${bStatus}=    Common.Select The Row    ${table.users}    1
+    Run Keyword If    ${bStatus}==False    Fail    The class is not selected from 'Students & Users' table.    ELSE    Wait Until Element Is Visible    userDetailsContainer
+    ...    30s    The USer Details window is not displayed
+    Sleep    5s
+    Comment    Click on Edit button of User Details table
+    Wait Until Element Is Visible    ${button.userDetails.edit}    30s    Edit button is not visible
+    Click Element    ${button.userDetails.edit}
+    ${userFname}=    Get Value    userFirstName
+    ${userLname}=    Get Value    userLastName
+    Comment    Modify the fields and click on cancel button
+    Input Text    ${text.userDetails.firstName}    ww
+    Input Text    ${text.userDetails.lastName}    qq
+    Click Element    ${button.userDetails.cancel}
+    sleep    2s
+    Comment    Validate whether Modified fields are saved or not
+    ${detailsFname}    Get Value    ${text.userDetails.firstName}
+    ${detailsLname}    Get Value    ${text.userDetails.lastName}
+    Run Keyword If    '${userFname}'!='${detailsFname}'    Fail    The first name ${detailsFname} displayed in 'UserDetail' window before editing mismatches with the User first name ${userFname}after editing.
+    Run Keyword If    '${userLname}'!='${detailsLname}'    Fail    The user last name ${detailsLname} displayed in 'UserDetail' window before editing mismatches with the User last name ${userLname}after editing.
+    [Teardown]    stop application

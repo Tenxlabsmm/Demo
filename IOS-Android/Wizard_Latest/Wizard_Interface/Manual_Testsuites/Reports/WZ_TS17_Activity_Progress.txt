@@ -1,0 +1,38 @@
+*** Test Cases ***
+WZ_TC01_Validate Activity Progress
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher, Password:dteacher
+    Click On Reports Button
+    Click On Activity Progress
+    Select a class from Class drop down list
+    Select Subject from subject drop down list    \    Expected Result: Report should be displayed for the selected Assignments
+    Select Activity from Activity drop down list    \    Expected Result: Report should be displayed for the selected Assignments
+
+WZ_TC02_Validate Activities in Activity Report
+    [Documentation]    Validate Activities in Activity Report
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher, Password:dteacher
+    Click On Reports Button
+    Click On Activity Progress
+    Select a class from Class drop down list
+    Select Subject and Activity from drop down list    \    Expected Result:Total Missed Answers Activity Report should be displayed for the selected Actvity
+    Verify the Activities    \    Expected Result:Total Students Answering Incorrectly and students who has performed the activity there name, date of the activity performed with time and Assignment code should be displayed
+
+WZ_TC03_Validate Grade, Print and Download Functionality in Activity Report
+    [Documentation]    Validate Grade, Print and Download Functionality in Activity Report
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher, Password:dteacher
+    Click On Reports Button
+    Click On Activity Progress
+    Select a class from Class drop down list
+    Select Subject and Activity from drop down list
+    Click on Grade[0] button    \    Expected Result: "There are no items to Grade" validation message should be displayed
+    Click on Print    \    Expected Result: Activity Report page should be printed
+    Click on Download    \    Expected Result: Activity Report page should be downloaded
+
+WZ_TC04_Validate Show Scores Functionality in Activity Report
+    [Documentation]    Validate Show Scores Functionality in Activity Report
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher, Password:dteacher
+    Click On Reports Button
+    Click On Activity Progress
+    Select a class from Class drop down list
+    Select Subject and Activity from drop down list    \    Expected Result:Total Missed Answers Activity Report should be displayed for the selected Actvity
+    Click on Show Scores button    \    Expected Result: Hide scores button and Scores of all the students should be displayed in Numeric format
+    Click on Hide Scores button    \    Expected Result: Scores of all the students should be displayed in Pie Chart format

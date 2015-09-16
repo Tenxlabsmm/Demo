@@ -1,0 +1,42 @@
+*** Settings ***
+Resource          ../Keywords/super.txt
+
+*** Test Cases ***
+WZ_TC01_Validate home screen controls with Student Role
+    [Documentation]    1. Login to wizard app as an student, then home page should appear with "Help & SignOut" buttons.
+    Comment    Login to wizard app as an 'Student'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${studentUserID}    ${studentPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials(${studentUserID},${studentPassword}).
+    wait for page load
+    Comment    Validate whether the 'SignOut' & 'Help' buttons are available or not in the home screen.
+    ${signOutStatus}=    Verify Element Visible    ${button.wizard.signOut}
+    Run Keyword And Continue On Failure    Run Keyword If    ${signOutStatus}==False    Fail    The 'SignOut' button is not visible.
+    ${helpStatus}=    Verify Element Visible    ${button.home.help}
+    Run Keyword If    ${homeStatus}==False    Fail    The 'Help' button is not visible.
+    [Teardown]    Stop Application
+
+WZ_TC02_Validate Delete functionality in Class table with Admin Role
+    [Documentation]    1.Login to wizrd as an admin
+    ...    2.Click on the "classes & Users' button
+    ...    3.Add a class to the classes table.
+    ...    4.Delete the added class from the classes table, that deleted class should not appear in the classes table.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on 'Classes & Users' button.
+    Sleep    3s
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    30s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Select Frame    iframeSchoolAdmin
+    Sleep    5s
+    Comment    Add a class to the classes table.
+    Add A Class    ThisClassShouldBeDeleted1
+    Comment    The selected class should be deleted
+    ${deletedRecordNo}=    Delete The Record    ${table.classesAndGroups}    ThisClassShouldBeDeleted1
+    Log    The ${deletedRecordNo} is deleted.
+    [Teardown]    Stop Application

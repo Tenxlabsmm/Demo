@@ -1,0 +1,539 @@
+*** Settings ***
+Resource          ../Keywords/super.txt
+
+*** Test Cases ***
+WZ_TC01_Validate Add Functionality in Classes Table
+    [Documentation]    1.Login to wizrd as an admin.
+    ...    2.Click on 'Classes And Users' buttton under 'More' tab.
+    ...    3.Then 'Classes & Groups' table should appear with 'Add' button on it.
+    ...    4.Click on 'Add' button, a 'New Class' window should appear.
+    ...    5.Enter (ClasName,Instructor) in it & click 'ok' .
+    ...    6.That newly added class should appear in the 'Classes & Groups' table.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Sleep    30s
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on 'Classes & Users' button.
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    30s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    Sleep    30s
+    Select Frame    iframeSchoolAdmin
+    Comment    The 'Classes & Groups' table should appear with 'Add' button it.
+    Wait Until Element Is Visible    ${button.classesAndUsers.add}    30s    The 'Add' button on 'Classes & Users' table is not visible.
+    Comment    Click 'Add' button.
+    Click Element    ${button.classesAndUsers.add}
+    Comment    Enter the 'ClassName' in the 'NewClass' window.
+    Wait Until Element Is Visible    ${text.newClass.Name}    30s    The 'NewClass' window is not visible.
+    ${randomNumber}=    Get Random Number In Given Range    100    1000
+    ${groupName}=    Set Variable    className${randomNumber}
+    Input Text    ${text.newClass.Name}    ${groupName}
+    Comment    Verify whether the 'LoginUserName' is selected as an 'Instructor' by default or not.
+    ${selectedInstructor}=    Get Text    //span[contains(@class,'SelectLabel')]
+    ${bStatus}=    String Should Contain    ${selectedInstructor}    lastadmin, firstadmin
+    Run Keyword If    ${bStatus}==False    Fail    The 'LoginUserName' is not selected as an instructor by default.
+    Comment    Click on 'Ok' button of 'NewClass' window.
+    Wait Until Element Is Visible    ${button.newClass.ok}    30s    The 'Ok' button in 'New Class' window is not displayed.
+    Click Element    ${button.newClass.ok}
+    Sleep    5s
+    Comment    Validate whether the newly added class has been added in the 'Classes & Groups' table or not.
+    ${classesNames}=    Get Table Values Into List    ${table.classesAndGroups}    Name
+    List Should Contain Value    ${classesNames}    className${randomNumber}    The 'ClassesOrGroups' table doesnot contain newly added class.
+    [Teardown]    Stop Application
+
+WZ_TC02_Validate Classes Table
+    [Documentation]    1.Login to wizrd app as an 'Admin'.
+    ...    2.Click on 'Classes & Users' button under 'More' tab.Then 'Classes & Groups' should appear with 'Add & Delete' buttons on it.
+    ...    3.Select a class from the 'Class' table.
+    ...    4.The selected class details should be displayed in the 'ClassDetails' window.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Sleep    30s
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on 'Classes & Users' button.
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    30s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    Sleep    30s
+    Select Frame    iframeSchoolAdmin
+    Comment    Verify whether 'Add' & 'Delete' buttons are visible in the 'Classes&Groups' table.
+    Wait Until Element Is Visible    ${button.classes.add}    30s    The 'Add' button on 'Classes & Users' table is not visible.
+    Wait Until Element Is Visible    ${button.classes.delete}    30s    The 'Delete' button is not visible in the 'Classes & Groups' table.
+    Comment    Select a row from the 'classes' table.
+    ${bStatus}=    Common.Select The Row    ${table.classesAndGroups}    1
+    Run Keyword If    ${bStatus}==False    Fail    The class is not selected from 'Classes & Groups' table.
+    Sleep    5s
+    Comment    Validate whether selected class details are displayed in the 'classDetails' window or not.
+    ${className}=    Get Table Cell Value    ${table.classesAndGroups}    1    Name
+    ${instructorName}=    Get Table Cell Value    ${table.classesAndGroups}    1    Instructor
+    ${class}=    Get Value    groupName
+    ${instructor}=    Get Text    //span[contains(@class,'SelectLabel')]
+    Run Keyword If    ${className}!=${class}    Fail    The classname ${class} displayed in 'ClassDetail' window mismatches with the selected record className ${className}.
+    ${bstatus}=    Run Keyword And Return Status    String Should Contain    ${instructor}    ${instructorName}
+    Run Keyword If    ${bstatus}!=True    Fail    The instructorname ${instructor} displayed in 'ClassDetail' window mismatches with the selected record instructorName ${instructorName}.
+    [Teardown]    Stop Application
+
+WZ_TC05_Validate Add Functionality without mandatory fields
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Sleep    15s
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Sleep    3s
+    Comment    Click on 'Classes & Users' button.
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    20s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    Sleep    10s
+    Select Frame    iframeSchoolAdmin
+    Comment    The 'Classes & Groups' table should appear with 'Add' button it.
+    Wait Until Element Is Visible    ${button.classesAndUsers.add}    20s    The 'Add' button on 'Classes & Users' table is not visible.
+    Comment    Click 'Add' button.
+    Click Element    ${button.classesAndUsers.add}
+    Sleep    5s
+    Comment    Verifying the visibility of New Class window.
+    ${windowStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${text.newClass.Name}    20s    The 'NewClass' window is not visible.
+    Comment    Clicking on Ok Button.
+    Run Keyword If    ${windowStatus}==True    Click Element    ${button.newClass.ok}
+    Sleep    3s
+    Comment    Retrieving text from alert message.
+    ${alertText}    CommonLibrary.Get Alert Message
+    Sleep    3s
+    ${expectedMessage}=    Set Variable    Class name is not valid.
+    Comment    Verifying the visibility of error message as "Class name is not valid"
+    ${bErrorMsgStatus}=    Run Keyword And Return Status    Should Contain    ${alertText}    ${expectedMessage}
+    Run Keyword If    '${bErrorMsgStatus}'!='True'    Fail    The Actual alert message '${alertText}' mismatches with the Expected '${expectedMessage}' .
+    [Teardown]    Stop Application
+
+WZ_TC11_Validate Duplicate Class Name in Classes table
+    [Documentation]    1.Login to wizrd as an 'Admin'
+    ...    2.Click on the 'Classes & Users' tab under 'More' button.
+    ...    3.Click on the 'Add' button of the 'Classses' table.
+    ...    4.Enter an already existing classname in the "newClass" window.
+    ...    5.Error message should be displayed as "Class name already exists"
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    20s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Select Frame    iframeSchoolAdmin
+    Comment    The 'Classes & Groups' table should appear with 'Add' button it.
+    Wait Until Element Is Visible    ${button.classesAndUsers.add}    20s    The 'Add' button on 'Classes & Users' table is not visible.
+    ${className}=    Get Table Cell Value    ${table.classesAndGroups}    1    Name
+    Comment    Click 'Add' button.
+    Click Element    ${button.classesAndUsers.add}
+    Sleep    5s
+    Comment    Enter the 'ClassName' which is already available in the 'Classes' table.
+    Wait Until Element Is Visible    ${text.newClass.Name}    30s    The 'NewClass' window is not visible.
+    Input Text    ${text.newClass.Name}    ${className}
+    Sleep    2s
+    Comment    Validate the 'ErrorMsg'.
+    ${errorMsg}=    Get Text    ${text.newClass.toasterMsg}
+    ${errorStatus}=    String Should Contain    ${errorMsg}    Class name already exists.
+    Run Keyword If    ${errorStatus}!=True    Fail    The errorMsg - '${errorMsg}' mismatches with the expected text 'Class name already exists.'
+    [Teardown]    Stop Application
+
+WZ_TC12_Validate Class Name Field in New Class Window
+    [Documentation]    1.Login to wizrd as an 'Admin'
+    ...    2.Click on the 'Classes & Users' tab under 'More' button.
+    ...    3.Click on the 'Add' button of the 'Classses' table.
+    ...    4.Enter an invalid \ classname like " #&%" \ in the "newClass" window.
+    ...    5.Error message should be displayed as "Value entered is not valid"
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    20s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Select Frame    iframeSchoolAdmin
+    Comment    The 'Classes & Groups' table should appear with 'Add' button it.
+    Wait Until Element Is Visible    ${button.classesAndUsers.add}    20s    The 'Add' button on 'Classes & Users' table is not visible.
+    Comment    Click 'Add' button.
+    Click Element    ${button.classesAndUsers.add}
+    Sleep    5s
+    Comment    Enter the 'ClassName' which is already available in the 'Classes' table.
+    Wait Until Element Is Visible    ${text.newClass.Name}    30s    The 'NewClass' window is not visible.
+    Input Text    ${text.newClass.Name}    ${SPACE}#!$
+    Sleep    1s
+    Comment    Validate the 'ErrorMsg'.
+    ${errorMsg}=    Get Text    ${text.masterToolTip}
+    ${errorStatus}=    String Should Contain    ${errorMsg}    The value entered is not valid
+    Run Keyword If    ${errorStatus}!=True    Fail    The errorMsg - '${errorMsg}' mismatches with the expected text 'The value entered is not valid'
+    [Teardown]    Stop Application
+
+WZ_TC13_Validate Class Student as Selected in Users table
+    [Documentation]    1.Login to wizrd as an 'Admin'
+    ...    2.Click on the 'Classes & Users' tab under 'More' button.
+    ...    3.Select a student from a class in the "Classes" table.
+    ...    4.The selected student should be selected in the "Users" table.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on the 'Clases & Users" button.
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    20s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Select Frame    iframeSchoolAdmin
+    Sleep    5s
+    Comment    Select a student from the given class.
+    ${studentName}=    Select Student From A Class    adminclass1
+    @{listOfStudentNames}=    Split String    ${studentName}    ${SPACE}
+    ${studentFirstName}=    Set Variable    @{listOfStudentNames}[0]
+    ${studentLastName}=    Set Variable    @{listOfStudentNames}[1]
+    Sleep    3s
+    Comment    validate Whether the student selected is also selected in the "Users" table or not.
+    ${firstName}=    Get Selected Row Cell Value    ${table.users}    First Name
+    ${lastName}=    Get Selected Row Cell Value    ${table.users}    Last Name
+    ${userRole}=    Get Selected Row Cell Value    ${table.users}    Role
+    Run Keyword And Continue On Failure    Run Keyword If    "${userRole}"!="Student"    Fail    The selected user is not a student.
+    Run Keyword And Continue On Failure    Run Keyword If    "${studentFirstName}"!="${firstName}"    Fail    The selected student firstname mismatches with firstname of the selected student in 'Users' table.
+    Run Keyword If    "${studentLastName}"!="${lastName}"    Fail    The selected student lastname mismatches with lastname of the selected student in 'Users' table.
+    [Teardown]    Stop Application
+
+WZ_TC03_Validate Edit Functionality in Student Frame
+    [Documentation]    1.Logon to wizard as an admin.
+    ...    2.Select 'Classes & Users' button under more button.
+    ...    3.Select a class & assign a students to it by clicking on the 'Edit' buttons.
+    ...    4.Validate whether the assigned students will appear in the 'Students' frame or not.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on the 'Clases & Users" button.
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    20s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Select Frame    iframeSchoolAdmin
+    Sleep    5s
+    Comment    Wait for 'Classes & Groups' table & select a class from it.
+    Wait Until Element Is Visible    groupGrid    30s    The 'Classes & Groups' table is not visible.
+    ${bStatus}=    Common.Select The Row    ${table.classesAndGroups}    1
+    Comment    Click on 'Edit' button which is on the header of 'ClassDetails' window.
+    Wait Until Element Is Visible    ${button.classDetail.edit}    30s
+    Click Element    ${button.classDetail.edit}
+    Comment    Clear all the students for a class in the 'Students' frame.
+    Clear All Checkboxes    Students
+    Sleep    5s
+    Comment    Click on the 'Edit' button of the 'Students' frame.
+    Click Element    ${button.students.edit}
+    Sleep    5s
+    Wait Until Element Is Visible    ${label.editStudentOrEditTitle.title}    30s    The 'Edit Students' window is not visible.
+    Comment    Select a student from the available students
+    Click Element    ${check.fromTable.firstRowCheckBox}
+    Comment    Validate whether the student assigned to a class will appear in the 'Members' table or not.
+    ${fromTableFirstName}=    Get Table Cell Value    ${table.fromTable}    1    First Name
+    ${fromTableLastName}=    Get Table Cell Value    ${table.fromTable}    1    Last Name
+    Sleep    5s
+    ${toTableFirstName}=    Get Table Cell Value    ${table.toTable}    1    First Name
+    ${toTableLastName}=    Get Table Cell Value    ${table.toTable}    1    Last Name
+    Run Keyword If    "${fromTableFirstName}"!="${toTableFirstName}" or "${fromTableLastName}"!="${toTableLastName}"    Fail    The selected student in the 'AvailableTable' is not shown in 'Members' table.    ELSE    Click Element    ${button.editStudentOrEditClass.save}
+    Sleep    5s
+    Comment    Validate whether the assigned students appear in the 'Students' frame or not.
+    ${studentName}=    Get Text    ${table.studentsFrame.rows}
+    ${firstNameStatus}=    String Should Contain    ${studentName}    ${toTableFirstName}
+    ${lastNameStatus}=    String Should Contain    ${studentName}    ${toTableLastName}
+    Run Keyword If    ${firstNameStatus}!=True or ${lastNameStatus}!=True    Fail    The selected student is not added properly.
+    [Teardown]    Stop Application
+
+WZ_TC06_Validate Show All Functionality in Edit Student Frame
+    [Documentation]    1.Login to wizard as an admin.
+    ...    2.Click on the 'Classes & Users' button.
+    ...    3.Select a class & click on the 'Edit' buttton of the classDetails window.
+    ...    4.Click on the 'Edit' button of the 'Students' frame, 'Edit Students' window will appear.
+    ...    5.Click on the 'Show All' buton, then all the all the UserRoles should appear under the 'Roles' collumn.
+    ...    6.Then Click on the 'Show Students Only' button then only 'Students' role should appear.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Sleep    20s
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Sleep    3s
+    Comment    Click on 'Classes & Users' button.
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    20s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    Sleep    10s
+    Select Frame    iframeSchoolAdmin
+    Comment    Wait for 'Classes & Groups' table & select a class from it.
+    Wait Until Element Is Visible    groupGrid    30s    The 'Classes & Groups' table is not visible.
+    ${bStatus}=    Common.Select The Row    ${table.classesAndGroups}    1
+    Comment    Click on 'Edit' button which is on the header of 'ClassDetails' window.
+    Wait Until Element Is Visible    ${button.classDetail.edit}    30s
+    Click Element    ${button.classDetail.edit}
+    Comment    Click on the 'Edit' button of the 'Students' frame.
+    Wait Until Element Is Visible    ${button.students.edit}    30s    The edit button on 'Students' frame is not visible.
+    Click Element    ${button.students.edit}
+    Sleep    5s
+    Wait Until Element Is Visible    ${label.editStudentOrEditTitle.title}    30s    The 'Edit Students' window is not visible.
+    Comment    Click on the 'Show All' button.
+    Click Element    ${button.editStudent.showAll}
+    Sleep    5s
+    Comment    Validate whether the roles column contain all the userRoles or not.
+    ${allRoles}=    Get Table Values Into List    ${table.fromTable}    Role
+    ${allRoles}=    Remove Duplicates    ${allRoles}
+    ${createdList}=    Create List    Instructor    Student    School Admin
+    Run Keyword And Continue On Failure    List Should Contain Sub List    ${allRoles}    ${createdList}    The Roles column doesnot contain all the user roles.
+    Comment    Click on 'Show Students Only' button.
+    Click Element    ${button.editStudent.showStudentsOnly}
+    Comment    Validate whether olnly 'students' are displayed under the 'Roles' column are not.
+    Sleep    2s
+    ${studentRoles}=    Get Table Values Into List    ${table.fromTable}    Role
+    ${studentRoles}=    Remove Duplicates    ${studentRoles}
+    ${createdList}=    Create List    Student
+    Lists Should Be Equal    ${studentRoles}    ${createdList}    The list does contain 'Student' & other roles also.
+    [Teardown]    Stop Application
+
+WZ_TC04_Validate Edit Functionality in Titles Frame
+    [Documentation]    1.Logon to wizard as an admin.
+    ...    2.Select 'Classes & Users' button under more button.
+    ...    3.Select a class & assign a title to it by clicking on the 'Edit' buttons.
+    ...    4.Validate whether the assigned tittle is appeared in the 'Titles' frame or not.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on the 'Clases & Users" button.
+    Sleep    2s
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    20s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Comment    Wait for 'Classes & Groups' table & select a class from it.
+    Select Frame    iframeSchoolAdmin
+    Sleep    5s
+    Wait Until Element Is Visible    groupGrid    30s    The 'Classes & Groups' table is not visible.
+    ${bStatus}=    Common.Select The Row    ${table.classesAndGroups}    1
+    Comment    Click on 'Edit' button which is on the header of 'ClassDetails' window.
+    Wait Until Element Is Visible    ${button.classDetail.edit}    30s
+    Click Element    ${button.classDetail.edit}
+    Comment    Clear all the previously allocated 'titles' for a class.
+    Clear All Checkboxes    Titles
+    Sleep    5s
+    Comment    Click on the 'Edit' button of the 'Titles' frame.
+    Click Element    ${button.titles.edit}
+    Sleep    5s
+    Wait Until Element Is Visible    ${label.editStudentOrEditTitle.title}    30s    The 'Edit Syllabus' window is not visible.
+    Comment    Select a title to a class.
+    Click Element    ${check.fromTable.firstRowCheckBox}
+    Comment    Validate whether a title assigned to a class will appear in the 'Syllabus' table or not.
+    ${fromTableSyllabusName}=    Get Table Cell Value    ${table.fromTable}    1    Name
+    Sleep    5s
+    ${toTableSyllabusName}=    Get Table Cell Value    ${table.toTable}    1    Name
+    Comment    Validate whether the assigned title to aclass will appeart in the 'Titles' frame or not.
+    Run Keyword If    "${fromTableSyllabusName}"!="${toTableSyllabusName}"    Fail    The selected Syllabus in the 'availableTitles' is not shown in the "syllabus" table.    ELSE    Click Element    ${button.editStudentOrEditClass.save}
+    Sleep    5s
+    ${titleName}=    Get Text    ${table.tiltlesFrame.rows}
+    Should Be Equal As Strings    ${titleName}    ${fromTableSyllabusName}    The title is not added in the 'Titles' frame.
+    [Teardown]    Stop Application
+
+WZ_TC09_Validate Cancel Functionality in Edit Student Frame
+    [Documentation]    1.Login to wizrd as an admin.
+    ...    2.Click on the 'Classes & Users' button.
+    ...    3.Select a class & click on the 'edit' button of the 'studentFrame'.
+    ...    4.Select a student to add & click on the 'Cancel' button.
+    ...    5.The selected student should not appear in the 'Students' frame.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on the 'Clases & Users" button.
+    Sleep    2s
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    30s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Select Frame    iframeSchoolAdmin
+    Sleep    5s
+    Wait Until Element Is Visible    groupGrid    30s    The 'Classes & Groups' table is not visible.
+    ${bStatus}=    Common.Select The Row    ${table.classesAndGroups}    1
+    Comment    Click on 'Edit' button which is on the header of 'ClassDetails' window.
+    Wait Until Element Is Visible    ${button.classDetail.edit}    30s
+    Click Element    ${button.classDetail.edit}
+    Comment    Clear all the students for a class in the 'Students' frame.
+    Clear All Checkboxes    Students
+    Sleep    5s
+    Comment    Click on the 'Edit' button of the 'Students' frame.
+    Click Element    ${button.students.edit}
+    Sleep    5s
+    Wait Until Element Is Visible    ${label.editStudentOrEditTitle.title}    30s    The 'Edit Students' window is not visible.
+    Comment    Select a student from the available students
+    Click Element    ${check.fromTable.firstRowCheckBox}
+    Comment    Validate whether the student assigned to a class will appear in the 'Members' table or not.
+    ${fromTableFirstName}=    Get Table Cell Value    ${table.fromTable}    1    First Name
+    ${fromTableLastName}=    Get Table Cell Value    ${table.fromTable}    1    Last Name
+    Sleep    5s
+    ${toTableFirstName}=    Get Table Cell Value    ${table.toTable}    1    First Name
+    ${toTableLastName}=    Get Table Cell Value    ${table.toTable}    1    Last Name
+    Run Keyword If    "${fromTableFirstName}"!="${toTableFirstName}" or "${fromTableLastName}"!="${toTableLastName}"    Fail    The selected student in the 'AvailableTable' is not shown in 'Members' table.    ELSE    Click Element    ${button.editStudentOrEditTitle.cancel}
+    Sleep    5s
+    Comment    Validate the assigned students to the class didnt appear in the schools frame when we click on 'Cancel' or not.
+    ${studentsCount}    Get Text    ${label.studentFrame.studentCount}
+    Should Be Equal As Strings    ${studentsCount}    (0)    The added students had appeared in students frame when we click on 'Cancel' button.
+    [Teardown]    Stop Application
+
+WZ_TC10_Validate Expand and Collapse functionality in Classes Details table
+    [Documentation]    1.Login to wizard as an admin.
+    ...    2.Click on the 'Classes & Users' button.
+    ...    3. Click on the 'ExpandOrColapse' button of the 'Classes & Groups' table, then 'Detail' window should appear
+    ...    4.Again click on the 'ExpandOrColapse' button of the 'Classes & Groups' table, then 'Detail' window should close.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on the 'Clases & Users" button.
+    Sleep    2s
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    30s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Select Frame    iframeSchoolAdmin
+    Sleep    10s
+    Comment    Click on the 'ExpandOrColapse' button of the 'Classes & \ Grops' window.
+    Wait Until Element Is Visible    groupGrid    30s    The 'Classes & Groups' table is not visible.
+    Wait Until Element Is Visible    ${button.classes.expandOrCollapse}    30s    The 'ExpandOrCollapse' button is not visible.
+    Click Element    ${button.classes.expandOrCollapse}
+    Sleep    2s
+    Comment    Validate whether 'Detail' window is opened or not.
+    ${expandStatus}=    Get Element Attribute    ${table.splitter}@aria-expanded
+    Run Keyword If    "${expandStatus}"!="true"    Fail    The 'ClassDetail' window is not appeared.
+    ${bStatus}    Verify Element Visible    ${label.caseDetail.detail}
+    Run Keyword If    ${bStatus}!=True    Fail    The 'Details' is not visible in the 'Details' window.
+    Comment    Click on the 'ExpandOrColapse' button of the 'Classes & \ Grops' window.
+    Click Element    ${button.classes.expandOrCollapse}
+    Sleep    2s
+    Comment    Validate whether 'Detail' window is closed or not.
+    ${expandStatus}=    Get Element Attribute    ${table.splitter}@aria-expanded
+    ${bStatus}    Run Keyword If    "${expandStatus}"!="false"    Fail    The 'ClassDetail' window is not appeared.    ELSE    Verify Element Visible
+    ...    ${label.caseDetail.detail}
+    Run Keyword If    ${bStatus}!=False    Fail    The 'Details' is visible in the 'Details' window afyer clicking 'ExpandOrClose' button.
+    [Teardown]    Stop Application
+
+WZ_TC07_Validate '+' Symbol Functionality in Available Students Table
+    [Documentation]    1.Login to wizrd as an admin.
+    ...    2.Click on 'Classes & Users' button.
+    ...    3.Select a class & edit students for that class
+    ...    4.Click on the '+' button of the 'available' table & deselect the firstname column.
+    ...    5.'FirstName' column should not appear in that table.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Sleep    3s
+    Comment    Click on 'Classes & Users' button.
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    20s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Select Frame    iframeSchoolAdmin
+    Comment    Wait for 'Classes & Groups' table & select a class from it.
+    Wait Until Element Is Visible    groupGrid    30s    The 'Classes & Groups' table is not visible.
+    ${bStatus}=    Common.Select The Row    ${table.classesAndGroups}    1
+    Comment    Click on 'Edit' button which is on the header of 'ClassDetails' window.
+    Wait Until Element Is Visible    ${button.classDetail.edit}    30s
+    Click Element    ${button.classDetail.edit}
+    Comment    Click on the 'Edit' button of the 'Students' frame.
+    Wait Until Element Is Visible    ${button.students.edit}    30s    The edit button on 'Students' frame is not visible.
+    Click Element    ${button.students.edit}
+    Sleep    5s
+    Wait Until Element Is Visible    ${label.editStudentOrEditTitle.title}    30s    The 'Edit Students' window is not visible.
+    Comment    Unselect the 'First_Name' check box under '+' button of the 'Available Students' table.
+    Click Element    ${image.fromTable.plus}
+    ${cc}    Get Matching Xpath Count    ${table.fromTable}//div[contains(@class,'dgrid-hider-menu-row')]
+    : FOR    ${iCounter}    IN RANGE    1    ${cc}+1
+    \    ${cname}    Get Text    ${table.fromTable}//div[contains(@class,'dgrid-hider-menu-row')][${iCounter}]/label
+    \    ${st}    Check Box Selection Status    ${table.fromTable}    ${cname}
+    \    Run Keyword And Continue On Failure    Run Keyword If    ${st}==False    Fail    The '${cname}' column is checked.
+    Comment    Unselect the 'First_Name' check box
+    ${columnName}    Set Variable    First Name
+    ${st}    Check Box Selection Status    ${table.fromTable}    ${columnName}
+    Run Keyword If    ${st}==True    Click Element    ${table.fromTable}//label[contains(text(),'${columnName}')]/preceding-sibling::input
+    Sleep    2s
+    ${columnHeaders}=    Get Table Column Headers Into List    ${table.fromTable}
+    List Should Not Contain Value    ${columnHeaders}    ${columnName}    The table contains the 'First Name' column even when its not checked.
+    [Teardown]    Stop Application
+
+WZ_TC08_Validate '+' Symbol Functionality in Members Table
+    [Documentation]    1.Login to wizrd as an admin.
+    ...    2.Click on 'Classes & Users' button.
+    ...    3.Select a class & edit students for that class
+    ...    4.Click on the '+' button of the 'Members' table & deselect the firstname column.
+    ...    5.'FirstName' column should not appear in that table.
+    Comment    Login to wizrd app as an 'Admin'.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    wait for page load
+    Comment    Click on 'More' button.
+    Wait Until Element Is Visible    ${button.home.more}    30s    The 'More' button is not visible.
+    Click Element    ${button.home.more}
+    Comment    Click on the 'Clases & Users" button.
+    Sleep    2s
+    Wait Until Element Is Visible    ${button.home.classesAndUsers}    30s    The 'Classes And Users' button is not visible.
+    Click Element    ${button.home.classesAndUsers}
+    wait for page load
+    Select Frame    iframeSchoolAdmin
+    Sleep    5s
+    Wait Until Element Is Visible    groupGrid    30s    The 'Classes & Groups' table is not visible.
+    ${bStatus}=    Common.Select The Row    ${table.classesAndGroups}    1
+    Comment    Click on 'Edit' button which is on the header of 'ClassDetails' window.
+    Wait Until Element Is Visible    ${button.classDetail.edit}    30s
+    Click Element    ${button.classDetail.edit}
+    Comment    Click on the 'Edit' button of the 'Students' frame.
+    Wait Until Element Is Visible    ${button.students.edit}    30s    The edit button on 'Students' frame is not visible.
+    Click Element    ${button.students.edit}
+    Sleep    5s
+    Wait Until Element Is Visible    ${label.editStudentOrEditTitle.title}    30s    The 'Edit Students' window is not visible.
+    Comment    Select a student from the available students
+    Click Element    ${check.fromTable.firstRowCheckBox}
+    Comment    Validate whether the student assigned to a class will appear in the 'Members' table or not.
+    ${fromTableFirstName}=    Get Table Cell Value    ${table.fromTable}    1    First Name
+    ${fromTableLastName}=    Get Table Cell Value    ${table.fromTable}    1    Last Name
+    Sleep    5s
+    ${toTableFirstName}=    Get Table Cell Value    ${table.toTable}    1    First Name
+    ${toTableLastName}=    Get Table Cell Value    ${table.toTable}    1    Last Name
+    ${columnHeaders}=    Run Keyword If    "${fromTableFirstName}"!="${toTableFirstName}" or "${fromTableLastName}"!="${toTableLastName}"    Fail    The selected student in the 'AvailableTable' is not shown in 'Members' table.    ELSE    Get Table Column Headers Into List
+    ...    ${table.toTable}
+    Comment    Validate whether all the collumn headers are selected are not.
+    Click Element    ${image.toTable.plus}
+    ${cc}    Get Matching Xpath Count    ${table.toTable}//div[contains(@class,'dgrid-hider-menu-row')]
+    : FOR    ${iCounter}    IN RANGE    1    ${cc}+1
+    \    ${cname}    Get Text    ${table.toTable}//div[contains(@class,'dgrid-hider-menu-row')][${iCounter}]/label
+    \    ${st}    Check Box Selection Status    ${table.toTable}    ${cname}
+    \    Run Keyword And Continue On Failure    Run Keyword If    ${st}==False    Fail    The '${cname}' column is checked.
+    Comment    Unselect the 'First_Name' check box
+    ${columnName}    Set Variable    First Name
+    ${st}    Check Box Selection Status    ${table.toTable}    ${columnName}
+    Run Keyword If    ${st}==True    Click Element    ${table.toTable}//label[contains(text(),'${columnName}')]/preceding-sibling::input
+    Sleep    2s
+    ${columnHeaders}=    Get Table Column Headers Into List    ${table.toTable}
+    List Should Not Contain Value    ${columnHeaders}    First Name    The table contains the 'First Name' column even when its not checked.
+    [Teardown]    Stop Application

@@ -1,0 +1,32 @@
+*** Settings ***
+Library           AutoItLibrary
+Library           Selenium2Library
+Resource          ../Objects/Buttons.txt
+Resource          ../Objects/TextBoxes.txt
+
+*** Variables ***
+${BROWSER}        android
+${WizardURL}      http://mmtxtest.mysatori.com/
+${studentUserID}    r.student4
+${studentPassword}    r.student4
+${instructorUserID}    dteacher
+${instructorPassword}    dteacher
+${adminUserID}    adminid
+${adminPassword}    adminpwd
+${SELENIUM HOST}    http://jody3t:c1ce8d09-98c7-4f5b-a533-fb5bdb34cbe0@ondemand.saucelabs.com:80/wd/hub
+${platform}       android    # Windows7 \ / \ Linux / Android / iOS
+${DESIRED_CAPABILITIES}    name:${name},browser:${BROWSER},version:${version},platform:${platform}
+${SauceLabs_Connect}    Yes
+${version}        4.0
+${name}           Test On ${platform}
+${deviceName}     Android
+
+*** Keywords ***
+Stop Application
+    [Documentation]    1.Closes the browser
+    ...    2.Closes the 'IEDRIVERSERVER'
+    ...    3.Closes the 'chromedriver'.
+    Comment    closes the browser.
+    Close Browser
+    Run Keyword If    '${BROWSER}'=='ie'    Process Close    IEDriverServer.exe
+    Run Keyword If    '${BROWSER}'=='gc'    Process Close    chromedriver.exe

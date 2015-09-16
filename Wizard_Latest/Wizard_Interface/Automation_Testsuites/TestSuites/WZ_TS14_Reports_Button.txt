@@ -1,0 +1,22 @@
+*** Settings ***
+Resource          ../Keywords/super.txt
+
+*** Test Cases ***
+WZ_TC01_Validate Report Button
+    [Documentation]    1.Open Wizard App with valid admin credentials.
+    ...    2.Verify visibility of Reports button and click Reports button.
+    ...    3.Verifying visibility of Class Report,School Report,Activity Report.
+    ...
+    Comment    Login into Wizard App with admin credentials.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Sleep    5s
+    Comment    Verifying visibility of \ 'Reports' button.
+    ${reportBtnStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.home.reports}    30s    Reports button is not visible at Home screen.
+    Comment    Clicking on Reports button.
+    Run Keyword If    ${reportBtnStatus}==True    Click Element    ${button.home.reports}
+    Comment    Verifying visibility of Class Report,School report,Activity Report Button.
+    Run Keyword And Continue On Failure    Wait Until Element Is Visible    ${button.report.classReport}    30s    Class Report button is not visible at Home screen.
+    Run Keyword And Continue On Failure    Wait Until Element Is Visible    ${button.report.schoolReport}    5s    School Report button is not visible at Home screen.
+    Run Keyword And Continue On Failure    Wait Until Element Is Visible    ${button.class.activityProgress}    5s    Activity Report button is not visible at Home screen.
+    [Teardown]    Stop Application

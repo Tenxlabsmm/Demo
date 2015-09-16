@@ -1,0 +1,81 @@
+*** Settings ***
+Resource          ../Keywords/super.txt
+
+*** Test Cases ***
+WZ_TC01_Validate controls under the More button
+    [Documentation]    1.Open Wizard App.
+    ...    2.Enter instutor credentials as r.teacher/r.teacher.
+    ...    3.click on Sign In Button.
+    ...    4.Click on More Button
+    ...    5.Verifying that More Button drop down contains 'Assaignment codes','Classes and Users','Contact Us' and 'Terms and Condition' or Not.
+    Comment    Login into Wizard App with Instructor Role.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${instructorUserID}    ${instructorPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Sleep    5s
+    Comment    Verifying visibility of 'More' Button at Home Page.
+    ${moreBtnStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.home.more}    30s    More Button is not visible at Home page
+    Comment    Clicking on 'More' Button.
+    Run Keyword If    ${moreBtnStatus}==True    Click Element    ${button.home.more}
+    Sleep    3s
+    Comment    Verifying visibility of 'Assignment Codes'.
+    Run Keyword And Continue On Failure    Wait Until Element Is Visible    ${button.home.assignmentCodes}    10s    'Assignment Codes' button is not Available.
+    Comment    Verifying visibility of 'Classes and Users' Button.
+    Run Keyword And Continue On Failure    Wait Until Element Is Visible    ${button.home.classesAndUsers}    10s    'Classes and Users' button is not Available.
+    Comment    Verifying visibility of 'Contacts Us' Button.
+    Run Keyword And Continue On Failure    Wait Until Element Is Visible    ${link.home.contactUs}    10s    'Contact Us Link' is not Available.
+    Comment    Verifying visibility of 'Terms and Conditions' Button.
+    Run Keyword And Continue On Failure    Wait Until Element Is Visible    ${link.home.termsAndConditions}    10s    'Terms and Conditions' button is not Available.
+    [Teardown]    Stop Application
+
+WZ_TC02_ Validate Terms and Condition Link
+    [Documentation]    1.Login Into the Wizard App.
+    ...    2.Enter the Admin Credentials and click on Sign In Button.
+    ...    3.Verifying visibility of More button at home Page .
+    ...    4.Click on More Button.
+    ...    5.click on 'Terms and Conditions' Link.
+    ...    6.Verifying visibility of 'Terms and Conditions' Window.
+    Comment    Login into Wizard App with Instructor Role.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${instructorUserID}    ${instructorPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Comment    Verifying visibility of 'More' Button at Home Page.
+    ${moreBtnStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.home.more}    10s
+    Comment    Clicking on 'More' Button.
+    Run Keyword If    ${moreBtnStatus}==True    Click Element    ${button.home.more}    ELSE    Fail    More Button is not visible at Home page
+    Wait Until Element Is Visible    ${link.home.termsAndConditions}    10s
+    Comment    Clicking on 'Terms and Conditions' Link.
+    Click Element    ${link.home.termsAndConditions}
+    Sleep    2s
+    Comment    Verifying visibility of 'Terms and Conditions' window.
+    ${bStatus}=    Run Keyword And Return Status    Page Should Contain Element    ${label.termsAndConditions.termsAndConditions}
+    Run Keyword If    ${bStatus}==False    Fail    The 'Terms and Conditions' window is not displayed.    ELSE    Click Element    ${button.termsAndConditions.close}
+    [Teardown]    Stop Application
+
+WZ_TC03_ Validate Contact us link
+    [Documentation]    1.Login Into the Wizard App.
+    ...    2.Enter the Admin Credentials and click on Sign In Button.
+    ...    3.Verifying visibility of More button at home Page .
+    ...    4.Click on More Button.
+    ...    5.click on 'Contact Us' Link.
+    ...    6.Verifying visibility of 'Contact Us' Window.
+    ...    7.Verifying visibility of Support and Close Button.
+    Comment    Login into Wizard App with Instructor Role.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${instructorUserID}    ${instructorPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Comment    Verifying visibility of 'More' Button at Home Page.
+    ${moreBtnStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.home.more}    10s
+    Comment    Clicking on 'More' Button.
+    Run Keyword If    ${moreBtnStatus}==True    Click Element    ${button.home.more}    ELSE    Fail    More Button is not visible at Home page
+    Wait Until Element Is Visible    ${link.home.contactUs}    20s
+    Comment    Clicking on 'Contact Us'Link.
+    Click Element    ${link.home.contactUs}
+    Sleep    2s
+    Comment    Verifying visibility of 'Contact Us' window.
+    ${bStatus}=    Run Keyword And Return Status    Page Should Contain Element    contactUsDlg
+    Run Keyword If    ${bStatus}==False    Fail    The 'contactUs' dialog box is not displayed.
+    Comment    Verifying visibility of 'Support' Button.
+    ${bStatus}=    Run Keyword And Return Status    Page Should Contain Element    ${button.contactUs.Support}
+    Run Keyword If    ${bStatus}==False    Fail    The 'Support' button is not displayed in 'ContactUs' window.
+    Comment    Verifying visibility of 'Close' Button.
+    ${bStatus}=    Run Keyword And Return Status    Page Should Contain Element    ${button.contactUs.close}
+    Run Keyword If    ${bStatus}==False    Fail    The 'Close' button is not displayed.    ELSE    Click Element    ${button.contactUs.close}
+    [Teardown]    Stop Application

@@ -1,0 +1,101 @@
+*** Test Cases ***
+WZ_TC01_Validate Add Functionality in Classes Table
+    [Documentation]    Validate Add Functionality in Classes Table which should create a new class
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Cllick on Classes table
+    Click on Add button
+    Enter all mandatory fields (Name, Instructor) and click on ok button    \    Expected Result: New class should be created in the classes table
+
+WZ_TC02_Validate Classes Table
+    [Documentation]    Validate Classes Table, and selected class details should be displayed when a class is selected
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Click on Classes Table
+    Verify Classes table    \    Expected Result: Classes table should be displayed with Add and Delete button
+    Select any Class    \    Expected Result:Details of the selected class should displayed in the details table.
+
+WZ_TC03_Validate Edit Functionality in Student Frame
+    [Documentation]    Validate Edit Functionality in Student Frame, Changes done to the student frame should be saved
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Click on Edit button of Student frame    \    Expected Result: New window should be displayed which consist of 1.Available students and current user class members tables
+    Modify students and Click on Save button    \    Expected Result:All the changes done to the students in Edit students class window should be saved
+
+WZ_TC04_Validate Edit Functionality in Titles Frame
+    [Documentation]    Validate Edit Functionality in Titles Frame, Changes done to titltes frame should be saved
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Click on Edit button of Titles frame
+    Modify Titles and Click on Save button    \    Expected Result:All the changes done to the Edit syllabus of class window should be saved
+
+WZ_TC05_Validate Add Functionality without mandatory fields
+    [Documentation]    Validate the error message, without entering mandatory fields
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Cllick on Classes table
+    Click on Add button    \    Expected Result:New Class window should be displayed
+    Click on OK button without entering mandatory fields(Name, Instructor) in New class window    \    Expected Result: Error message should be displayed as "Class name is not valid"
+
+WZ_TC06_Validate Show All Functionality in Edit Student Frame
+    [Documentation]    Validate Show All Functionality in Edit Student Frame, should display all the users details in the table
+    ...    and for 'show student only' button, only the student details should be displayed
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Click on Edit button of Student frame
+    Click on Show All button    \    Expected Result:All Roles details should be displayed in Available Users table and 'Show Students Only' Button should be displayed
+    Click on 'Show Students Only'    \    Expected Result: Only Student Role details should be displayed in Available students table
+
+WZ_TC07_Validate '+' Symbol Functionality in Available Students Table
+    [Documentation]    Validate '+' Symbol Functionality in Available Students Table, when unchecked the check box those detials should not be displayed
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Click on Edit button of Student frame
+    Click on '+' symbol at Available students table    \    Expected Result:Sel, First Name, Last Name, Grade, User Id, Role check box should be displayed
+    Uncheck on any check box    Test Data:Sel/ First Name/ Last Name/ Grade/ User Id/ Role    Expected Result: The Unchecked checkbox details should not be displayed in the Available Students table
+
+WZ_TC08_Validate '+' Symbol Functionality in Members Table
+    [Documentation]    Validate '+' Symbol Functionality in Members Table, when unchecked the check box those detials should not be displayed
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Click on Edit button of Student frame
+    Click on '+' symbol at Available Members table    \    Expected Result:Sel, First Name, Last Name, Grade, User Id check box should be displayed
+    Uncheck on any check box    Test Data:Sel/ First Name/ Last Name/ Grade/ User Id    Expected Result: The Unchecked checkbox details should not be displayed in the Members table
+
+WZ_TC09_Validate Cancel Functionality in Edit Student Frame
+    [Documentation]    Validate Cancel Functionality in Edit Student Frame, after modifying the changes
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Click on Edit button of Student frame
+    Click on any check box of the Available Students table verify the Members table    \    Expected Result:Checked checkbox details should be displayed in the Members table
+    Click on Cancel button    \    Expected Result: 'Edit Students in Class' window should be closed and changes should not be saved
+
+WZ_TC10_Validate Expand and Collapse functionality in Classes Details table
+    [Documentation]    Validate Expand and Collapse functionality in Users Details table, when Expanded \ and Collapsed
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Click on Expand i.e, on the right corner of the classes & groups table    \    Expected Result: Details table should be displayed
+    Click on collapse in details table    \    Expected Result: Details table should be collapsed
+
+WZ_TC11_Validate Duplicate Class Name in Classes table
+    [Documentation]    Validate the error message when existing class name is entered
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Cllick on Classes table
+    Click on Add button
+    Enter a class name which is already available in the classes table    \    Expected Result: Error message should be displayed as "Class name already exists"
+
+WZ_TC12_Validate Class Name Field in New Class Window
+    [Documentation]    Validate the error message at Class Name Field, when space or full stop(.) or Special characters(!@#) are entered
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Cllick on Classes table
+    Click on Add button
+    Enter space or full stop (.) or special character as the first character in the Name field    Test Data: space/./@!    Expected Result: Error message should be displayed as "Value entered is not valid"
+
+WZ_TC13_Validate Class Student as Selected in Users table
+    [Documentation]    Validate Class Student as Selected in Users table, when a student is selected from the class details table then the student details should be selected in the Users table
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Select a class which has a student in Classes Table
+    Select the student from student frame    \    Expected Result:Student should be displayed as selected in the Users Table

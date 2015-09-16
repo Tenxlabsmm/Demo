@@ -1,0 +1,15 @@
+*** Test Cases ***
+WZ_TC01_Validate Assignment Code
+    Login to wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on More button
+    Click on Assignment Code
+    Verify the Assignment code table    \    Expected Result: Assignment code table should be displayed
+    click on Export button    \    Expected Result: User should able to export the Assignment code table
+    Click on Print button    \    Expected Result: User should able to print the Assignment code table
+    Click on Print Preview button    \    Expected Result: User should able to preview the Assignment code table before print
+    click on close button    \    Expected Result: User should able to close the Assignment code table
+
+WZ_TC02_Validate when no assignments are assigned by the logged in user
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on More button
+    Click on Assignment Code    \    Expected Result:"No assignments to display" label should be displayed in the Assignments code table

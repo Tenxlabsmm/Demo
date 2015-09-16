@@ -1,0 +1,15 @@
+*** Test Cases ***
+WZ_TC01_Validate Support button
+    Login to wizard    Test Data: https://mmtxtest.mysatori.com User ID: adminid, Password:adminpwd
+    Click On Sign IN Button
+    Click on Support button    \    Expected Result:"How can i help you?" window should be displayed
+    Enter all mandatory fields (It's about, Your Message, Your Email Address)
+    Click on Attach Files
+    Click on Choose File button
+    Click on Send button    \    Expected Result:Entered details should be send to Support team and "Your Message Has been sent successfully" message should be displayed
+
+WZ_TC02_Validate Support button with out entering mandatory fields
+    Login to wizard    Test Data: https://mmtxtest.mysatori.com User ID: adminid/dteacher, Password:adminpwd/dteacher
+    Click On Sign IN Button
+    Click on Support button
+    Click on Send button without entering mandatory fields    \    Expected Result:Error message should be displayed as1.It's about can't be empty" 2."Your message" can't be empty 3."Email" is invaid

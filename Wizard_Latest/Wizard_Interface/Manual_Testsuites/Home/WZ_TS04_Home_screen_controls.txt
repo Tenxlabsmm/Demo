@@ -1,0 +1,11 @@
+*** Test Cases ***
+WZ_TC01_Validate home screen controls
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Enter valid credentials    Test Data: User ID- r.teacher Password- r.teacher
+    Click on Sign In button    \    Expected Result: Home Screen should be displayed with More, support, Help & Sign Out button
+
+WZ_TC02_Validate Home Button
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Assignments button
+    Verify the Home Screen Controls
+    Click on Home Button    \    Expected result: Home page should be displayed

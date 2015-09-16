@@ -1,0 +1,11 @@
+*** Settings ***
+Library           Selenium2Library
+Library           String
+Library           OperatingSystem
+Library           ../Library/CommonLibrary.py
+Resource          ../Objects/Objects.txt
+Resource          global.txt
+Resource          login.txt
+Resource          newuser.txt
+Library           Collections
+Resource          common.txt

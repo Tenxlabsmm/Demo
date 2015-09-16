@@ -1,0 +1,138 @@
+*** Settings ***
+Resource          ../Keywords/super.txt
+
+*** Test Cases ***
+WZ_TC01_Validate with login credentials.
+    [Documentation]    1. Open Wizard App.
+    ...    2. Enter valid User ID, Password .
+    ...    3. Click 'Sign - In' button.
+    ...    4. 'Mentoring Minds' page should be displayed with 'UserName'.
+    Comment    Login to \ Wizard appplication with valid credentials of student.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${studentUserID}    ${studentPassword}
+    Comment    Fails,if the user is not able to login with the valid credentials.
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Comment    Fails,if alert messsage is displayed after logging into the wizard.
+    Run Keyword If    ${loginStatus}==True and ${alertStatus}==True    Fail    The alert message is displayed after loging into wizard with valid credentials.
+    Comment    Verifying whether the Home Page is displyed or Not.
+    ${pageTitle}=    Get Title
+    Run Keyword If    '${pageTitle}'!='Mentoring Minds'    Fail    The page '${pageTitle}' is displayed inspite of 'MentoringMinds' .
+    Comment    Verifying whether loginName of the user is displayed or not.
+    Wait Until Element Is Visible    ${label.wizard.loginName}    30s
+    ${loginName}=    Get Text    ${label.wizard.loginName}
+    ${bLoginNameStatus}=    Run Keyword And Return Status    Should Contain    ${loginName}    student4 r
+    Run Keyword If    '${bLoginNameStatus}'!='True'    Fail    The Actual UserName Mismatches with Expected UserName.
+    [Teardown]    Stop Application
+
+WZ_TC02_Validate user with Invalid User ID credentials
+    [Documentation]    1.Open wizard Appl.
+    ...    2.Enter a invalid userID .
+    ...    3.Enter a valid password .
+    ...    4.Click 'Sign -In' button.
+    ...    5.Verifying \ that Error message should contain \ "The User ID or Password is incorrect. Please try again.".
+    Comment    Login to the Wizard application \ with invalid UserID.
+    ${invalidUserID}=    Set Variable    testtest
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${studentUserID}    ${studentPassword}
+    Comment    Fails,if the user is able to login with invalid UserID.
+    Run Keyword If    ${loginStatus}==True    Fail    The User is \ able to login with invalid UserID.
+    Comment    Fails,if alert message is not displayed with invalid UserID.
+    Run Keyword If    ${loginStatus}==False and ${alertStatus}==False    Fail    The Alert message is not displayed.
+    Comment    Fails,if the alerttext in the alertwindow mismatches with the Expected.
+    ${expectedMessage}=    Set Variable    The User ID or Password is incorrect. Please try again.
+    ${bErrorMsgStatus}=    Run Keyword And Return Status    Should Contain    ${alertText}    ${expectedMessage}
+    Run Keyword If    '${bErrorMsgStatus}'!='True'    Fail    The Actual alert message '${alertText}' mismatches with the Expected '${expectedMessage}' .
+    [Teardown]    Stop Application
+
+WZ_TC03_Validate user with Invalid Password credentials
+    [Documentation]    1. Open Wizard App.
+    ...    2.Enter a valid userID .
+    ...    3.Enter a invalid password .
+    ...    4.Click 'Sign -In' button.
+    ...    5.Verifying \ that Error message should contain \ "The User ID or Password is incorrect. Please try again.".
+    Comment    Login to the Wizard Application \ with invalid Password.
+    ${invalidPassword}=    Set Variable    r.teacher1
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${studentUserID}    ${invalidPassword}
+    Comment    Fails,if the user is able to login with invalid Password.
+    Run Keyword If    ${loginStatus}==True    Fail    The User is \ able to login with invalid Password.
+    Comment    Fails,if alertmessage is not displayed with invalid Password.
+    Run Keyword If    ${loginStatus}==False and ${alertStatus}==False    Fail    The Alert message is not displayed.
+    Comment    Fails,if the alerttext in the alertwindow mismatches with the Expected.
+    ${expectedMessage}=    Set Variable    The User ID or Password is incorrect. Please try again.
+    ${bErrorMsgStatus}=    Run Keyword And Return Status    Should Contain    ${alertText}    ${expectedMessage}
+    Run Keyword If    '${bErrorMsgStatus}'!='True'    Fail    The Actual alert message '${alertText}' mismatches with the Expected '${expectedMessage}' .
+    [Teardown]    Stop Application
+
+WZ_TC04_Validate user with no login credentials
+    [Documentation]    1. Open Wizard App .
+    ...    2. Click 'Sign -In' button.
+    ...    3.Verifying \ that Error message should contain \ "The User ID or Password is incorrect. Please try again.".
+    Comment    Login to teh Wizard Applciation with no UserID & Password.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${EMPTY}    ${EMPTY}
+    Comment    Fails, if the user is able to login without UserID & password.
+    Run Keyword If    ${loginStatus}==True    Fail    The User is \ able to login with No User Credentials.
+    Comment    Fails,if the alert message is not displayed.
+    Run Keyword If    ${loginStatus}==False and ${alertStatus}==False    Fail    The Alert message is not displayed.
+    Comment    Fails,if the alerttext in the alertwindow mismatches with the Expected.
+    ${expectedMessage}=    Set Variable    The User ID or Password is incorrect. Please try again.
+    ${bErrorMsgStatus}=    Run Keyword And Return Status    Should Contain    ${alertText}    ${expectedMessage}
+    Run Keyword If    '${bErrorMsgStatus}'!='True'    Fail    The Actual alert message '${alertText}' mismatches with the Expected '${expectedMessage}' .
+    [Teardown]    Stop Application
+
+WZ_TC05_Validate User ID with special characters
+    [Documentation]    1.Open Wizard App.
+    ...    2.Enter a userID with special charecters .
+    ...    3.Enter a valid password.
+    ...    4.Verifying \ that Error message should contain \ "The User ID or Password is incorrect. Please try again.".
+    Comment    Login to the Wizard Application with invalid special charecter UserID.
+    ${specialCharectersUserId}=    Set Variable    ^@#$admin
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${specialCharectersUserId}    ${adminPassword}
+    Comment    Fails,if the user is able to login with invalid special charecter UserID.
+    Run Keyword If    ${loginStatus}==True    Fail    The User is \ able to login with invalid specialcharecter UserID.
+    Comment    Fails, if the alert window is not displayed with invalid UserID.
+    Run Keyword If    ${loginStatus}==False and ${alertStatus}==False    Fail    The Alert message is not displayed.
+    Comment    Validates the 'alertMessage'.
+    ${expectedMessage}=    Set Variable    The User ID or Password is incorrect. Please try again.
+    ${bErrorMsgStatus}=    Run Keyword And Return Status    Should Contain    ${alertText}    ${expectedMessage}
+    Run Keyword If    '${bErrorMsgStatus}'!='True'    Fail    The Actual alert message '${alertText}' mismatches with the Expected '${expectedMessage}' .
+    [Teardown]    Stop Application
+
+WZ_TC06_Validate Password with special characters
+    [Documentation]    1.Open Wizard App.
+    ...    2.Enter a valid User ID.
+    ...    3.Enter a password with special charecters.
+    ...    4.Verifying \ that Error message should contain \ "The User ID or Password is incorrect. Please try again.".
+    Comment    Login to the Wizard Application with invalid specialCharecter password.
+    ${specialCharPassword}=    Set Variable    ^@#$admin/%
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${specialCharPassword}
+    Comment    Fails,if the user is able to login with invalid special charecter Password.
+    Run Keyword If    ${loginStatus}==True    Fail    The User is able to login with invalid specialcharecter Password.
+    Comment    Fails, if the alert window is not displayed with invalid specialCharecter password.
+    Run Keyword If    ${loginStatus}==False and ${alertStatus}==False    Fail    The Alert message is not displayed.
+    Comment    Validates the 'alertMessage'.
+    ${expectedMessage}=    Set Variable    The User ID or Password is incorrect. Please try again.
+    ${bErrorMsgStatus}=    Run Keyword And Return Status    Should Contain    ${alertText}    ${expectedMessage}
+    Run Keyword If    '${bErrorMsgStatus}'!='True'    Fail    The Actual alert message '${alertText}' mismatches with the Expected '${expectedMessage}' .
+    [Teardown]    Stop Application
+
+WZ_TC07_Validate Assignment Code field
+    [Documentation]    1.Open the Wizard App.
+    ...    2.Enter Valid userId and Invalid Password.
+    ...    3.Verify the "Assignment code(s)" is displayed or not.If it disply enter valid password.
+    ...    4.Verify the "Assignment code(s) (Optional)" is displayed or not.
+    Comment    Open the Wizard application.
+    OpenBrowserToLoginPage    ${WizardURL}    ${BROWSER}
+    Wait Until Page Contains Element    ${text.wizard.userID}    30s
+    Comment    Enter UserID.
+    Input Text    ${text.wizard.userID}    ${adminUserID}
+    Sleep    1s
+    ${invalidPwd}=    Set Variable    test123
+    Comment    Enter InValid Password.
+    Input Text    ${text.wizard.password}    ${invalidPwd}
+    Wait Until Page Contains Element    ${text.home.assignmentCode}    30s
+    ${assigmntStatus}=    Get Text    ${text.home.assignmentCode}
+    Comment    Verifying the "Assignment code (s)" displayed or Not.if it display Enter Valid Password.
+    Run Keyword If    '${assigmntStatus}'=='Assignment Code(s)'    Input Text    ${text.wizard.password}    ${adminPassword}    ELSE    Fail
+    ...    Assignment Code field should be displayed as "Assignment code(s)" for invalid credentials
+    Comment    Verifying the "Assignment code (s) (Optional)" displayed or Not.
+    ${assigmntStatus}=    Get Text    ${text.home.assignmentCode}
+    Run Keyword If    '${assigmntStatus}'!='Assignment Code(s) (Optional)'    Fail    Assignment Code field should be displayed as "Assignment code (s) (Optional)" for valid credentials
+    [Teardown]    Stop Application

@@ -1,0 +1,13 @@
+*** Variables ***
+${label.wizard.loginName}    //span[@class='dashLink']
+${label.login.browserValidation}    //div[@id='browserValidationDlg']
+${label.termsAndConditions.termsAndConditions}    //div[contains(@class,'ui-dialog ui-widget')]//span[contains(text(),'Terms and Conditions')]
+${label.help.helpWindow}    //div[contains(@class,'ui-dialog ui-widget')]//span[contains(text(),'Help')]
+${label.login.motivationOnLine}    //div[@id='loginRect']/div[contains(@style,'mm_motivation_online.png')]
+${label.editStudentOrEditTitle.title}    //span[@id='listEditorDlg_title']
+${label.caseDetail.detail}    //div[contains(@id,'GroupPropsToolbar')]/span[contains(text(),'Details')]
+${label.studentFrame.studentCount}    //span[contains(@class,'subpanel-header-label') and contains(text(),'Students')]//following-sibling::span
+${label.forgotDlg.forgotUserIdOrPassword}    //div[@id='forgotDlg']//div[contains (text(),'Forgot User ID or Password')]
+${label.passwordDlg.yourPasswordIs}    //div[@id='passwordDlg']//p[contains(text(),'Your password is:')]
+${label.passwordDlg.password}    //p[@id='passwordDlgValue']
+${label.newUser.newUser}    //span[contains(text(),'New User')]

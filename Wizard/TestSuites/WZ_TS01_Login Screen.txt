@@ -1,0 +1,29 @@
+*** Settings ***
+Resource          ../Keywords/super.txt
+Library           AutoItLibrary
+
+*** Test Cases ***
+WZ_TC01_Validate with login credentials.
+    [Documentation]    1. Open Wizard App.
+    ...    2. Enter valid User ID, Password .
+    ...    3. Click 'Sign - In' button.
+    ...    4. 'Mentoring Minds' page should be displayed with 'UserName'.
+    Comment    Login to \ Wizard appplication with valid credentials of student.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${studentUserID}    ${studentPassword}
+    Comment    Fails,if the user is not able to login with the valid credentials.
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Comment    Fails,if alert messsage is displayed after logging into the wizard.
+    Run Keyword If    ${loginStatus}==True and ${alertStatus}==True    Fail    The alert message is displayed after loging into wizard with valid credentials.
+    Comment    Verifying whether the Home Page is displyed or Not.
+    ${pageTitle}=    Get Title
+    Run Keyword If    '${pageTitle}'!='Mentoring Minds'    Fail    The page '${pageTitle}' is displayed inspite of 'MentoringMinds' .
+    Comment    Verifying whether loginName of the user is displayed or not.
+    Wait Until Element Is Visible    ${label.wizard.loginName}    30s
+    ${loginName}=    Get Text    ${label.wizard.loginName}
+    ${bLoginNameStatus}=    Run Keyword And Return Status    Should Contain    ${loginName}    student4 r
+    Run Keyword If    '${bLoginNameStatus}'!='True'    Fail    The Actual UserName Mismatches with Expected UserName.
+    Close All Browsers
+    [Teardown]
+
+tc01
+    AutoItLibrary.Mouse Move    44    333

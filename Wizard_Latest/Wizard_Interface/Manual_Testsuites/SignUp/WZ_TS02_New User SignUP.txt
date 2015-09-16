@@ -1,0 +1,82 @@
+*** Test Cases ***
+WZ_TC01_Create Student User from SignUp
+    [Documentation]    Validating with valid login credentials of Admin user
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Click "New User" button
+    Click "Yes" button from Sign-Up dialog
+    Enter Assignment code    Test Data:HK5
+    Enter First Name,Last Name,unique Userid and password.    Test Data : testfirst,testlast,testid,testpwd    Expected Result :"Sign-Up" button should be enabled.
+    Click "SignUp" button.    \    Expected Result: HomeScreen should appear with first name and last name text on the right top most corner.
+
+WZ_TC03_Create Teacher User from SignUp
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Click "New User" button
+    Click "No" button from Sign-Up dialog
+    Enter Instructor key    TestData : ZZZ    Expected Result :"SignUp" dialog should be appeared to enter teacher details
+    Enter Firstname,Lastname,user id,password,no of classes,class names and Email Id.    Test Data : Ex: Testfirst,Testlast,testuserid,testpwd,2,test1,test2 and test@test.com
+    Click on "Sign Up" button.    \    Expected Result: Home page should be displayed as "Instructor : FirstName LastName" of the created instructor on the right top most corner .
+
+WZ_TC04_Create Teacher User from SignUp screen without Mandatory fields
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Click "New User" button
+    Click "No" button from Sign-Up dialog
+    Enter Instructor key    TestData : ZZZ    Expected Result :"SignUp" dialog should be appeared to enter teacher details
+    Enter only Lastname,user id,password,no of classes,class names and Email Id.    Test Data : Ex: Testlast,testuserid,testpwd,2,test1,test2 and test@test.com    Expected Result :"FirstName" textbox should be highlighted & "SignUp" button should be disabled.
+
+WZ_TC05_Create Admin User from SignUp
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Click "New User" button
+    Click "No" button from Sign-Up dialog
+    Enter administrator key    TestData : BU2B-2112    Expected Result :"SignUp" dialog should be appeared to enter administrator details
+    Enter Firstname,Lastname,user id,password,no of classes,class names and Email Id.    Test Data : Ex: first admin,last admin,testid,testpwd,2,class 1,class 2 and testqa@test.com.
+    Click on "Sign Up" button.    \    Expected Result: Home page should be displayed as "administrator : FirstName LastName" of the created administrator on the right top most corner .
+
+WZ_TC06_Create Admin User from SignUp screen without mandatory fields.
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Click "New User" button
+    Click "No" button from Sign-Up dialog
+    Enter administrator key    TestData : BU2B-2112    Expected Result :"SignUp" dialog should be appeared to enter administrator details
+    Enter only Lastname,user id,password,no of classes,class names and Email Id.    Test Data : Ex: last admin,testid,testpwd,2,class 1,class 2 and testqa@test.com.    Expected Result :"FirstName" textbox should be highlighted & "SignUp" button should be disabled.
+
+WZ_TC02_Create Student User without entering Mandatory fields
+    [Documentation]    Validating the 'SignUp' button functionality without the mandatory fields.
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Click "New User" button
+    Click "yes" button from Sign-Up dialog
+    Enter Assingnment code    Test Data : HK5    Expected Result :"SignUp" dialog should be appeared to enter student details
+    Enter all the user details expect First Name    \    Expected Result :"FirstName" textbox should be highlighted
+    Enter all the user details except LastName    \    Expected Result :"LastName" textbox should be highlighted
+    Enter all the user details except UserID    \    Expected Result :"UserID" textbox should be highlighted
+    Enter all the user details except Password    \    Expected Result :"Password" textbox should be highlighted
+
+WZ_TC07_Validate Classes with value '0'
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Click "New User" button
+    Click "No" button from Sign-Up dialog
+    Enter Instructor key    TestData : ZZZ
+    Enter all mandatory field (Firstname,Lastname,user id,password,Email Id) enter no. of classes as '0'    Test Data : No. of Class- 0
+    Click on Sign Up    \    Expected Result: Message should be displayed as "You are not Instructor of any Class" in Home>>Assignments page
+
+WZ_TC08_Validate Classes with value '1'
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/ \ User ID:dteacher Password: dteacher
+    Click "New User" button
+    Click "No" button from Sign-Up dialog
+    Enter Instructor key    TestData : ZZZ
+    Enter all mandatory field (Firstname,Lastname,user id,password,Email Id) enter no. of classes as '1'    Test Data : No. of Class- 1
+    Click on Sign Up    \    Expected Result: Class name should be displayed as logged in user "first name last name class" ex:dteacher test class in Home>>Assignments page
+
+WZ_TC09_Validate Classes with value more than 100
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/ User ID:dteacher Password: dteacher
+    Click "New User" button
+    Click "No" button from Sign-Up dialog
+    Enter Instructor key    TestData : ZZZ/ BU2B-2112
+    Enter all mandatory field (Firstname,Lastname,user id,password,Email Id) enter no. of classes as '100'    Test Data : No. of Class- 101    Expected Result: Error message should be displayed as "Value entered is not valid"
+
+WZ_TC10_Validate Duplicate Class Name
+    [Documentation]    Validating the Duplicate class name, when already existing class name is entered "Class name already exists" error message should be displayed
+    Open browser and enter app URL    Test Data: http://mmtxtest.mysatori.com/
+    Click "New User" button
+    Click "No" button from Sign-Up dialog
+    Enter Instructor key    TestData : ZZZ/ BU2B-2112
+    Enter all mandatory field (Firstname,Lastname,user id,password,Email Id) enter no. of classes as 2 or more than 2    Test Data : No. of Class- 3
+    Enter same class name for the remaining classes    \    Expected Result: Error message should be displayed as "Class name already exists"

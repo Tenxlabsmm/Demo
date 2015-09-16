@@ -1,0 +1,131 @@
+*** Test Cases ***
+WZ_TC01_Validate Assignments Button
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: adminid Password:adminpwd
+    Verify home screen
+    Click On Assignmemts Button    \    Expected Result: Assignments page should be displayed
+
+WZ_TC02_Add Assignments to Class
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: adminid Password:adminpwd
+    Verify home screen
+    Click On Assignmemts Button
+    Select the class    \    Expected Result:Subjects should be displayed
+    Select the Subject    \    Expected Result: Levels should be dislayed
+    Select the Level    \    Expected Result: Assignments should be displayed
+    Select the Assignment    \    Expected Result: Add to Select class button should be displayed
+    Click on Add to selected classes    \    Expected Result:'Done' button should be displayed
+    Click on Done button    \    Expected Result: Completed screen should be displayed with asigned assignments details
+
+WZ_TC03_Validate Completed Screen
+    [Documentation]    Validate Completed Screen, after assigning assignments to the selected class completed screen should be displayed with Export, Print, Prinet Preview and Hand Out button
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Verify home screen
+    Click On Assignmemts Button
+    Select a class and assign the assignments to the class
+    Click on Done button
+    Verify the completed screen    \    Expected Result:Export, Print, Preview and Handout button should be displayed
+
+WZ_TC04_Validate Export Functionality in Completed Screen
+    [Documentation]    Validate Export Functionality in Completed Screen, After assigning assignments to the class completed screen should be displayed with the Export button when Export button is clicked then assigned assignments details should be Exported
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Verify home screen
+    Click On Assignmemts Button
+    Select a class and assign the assignments to the class
+    Click on Done button
+    Verify the completed screen    \    Expected Result:Export, Print, Preview and Handout button should be displayed
+    Click on Export Button    \    Expected Result:Assignment code details should be exported
+
+WZ_TC05_Validate Print and Print Preview Functionality in Completed Screen
+    [Documentation]    Validate Print and Print Preview Functionality in Completed Screen, after assigning assignments to the class completed screen should be displayed with the Print and Print preview button when Print \ button is clicked then assigned assignments details should be Printed.
+    ...    When Print Preview button is clicked then assignments details should be previewed to print
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Assignmemts Button
+    Select a class and assign the assignments to the class
+    Verify the Completed Screen
+    Click on Print Preview Button    \    Expected Result:Assignment code details should be previewed to print
+    Click on Print Button    \    Expected Result:Assignment code details should be printed
+
+WZ_TC06_Validate Duplicate Assignments of Class
+    [Documentation]    Validate Duplicate Assignments of Class, when a duplicate assignment is assigned \ then a Red badge should be diaplyed on the top right corner of the icon \ \
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: adminid Password:adminpwd
+    Verify home screen
+    Click On Assignmemts Button
+    Select the class and add assignments to the class
+    Select the same class and add the same assignment to the class    \    Expected Result:A 'Red Badge' should be displayed on the upper right corner of the 'Assignment Icon'
+
+WZ_TC07_Validate Assigned Assignments to Students
+    [Documentation]    Validating the Assignment which are assigned to a class by the instructor, the assigned assignment should be dislayed to the student who are members of the selected class
+    Login to Wizard with Instructor Role    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Assignmemts Button
+    Select the class and assign assignmnets to class
+    Login to Wizard with Student role, who is the student of the selected class    Test Data: https://mmtxtest.mysatori.com User ID: gg Password:gg
+    Verify the assignment displayed in the student home page    \    Expected Result: Assigned assignments should be displayed
+
+WZ_TC08_Validate Non Member Students of the class
+    [Documentation]    Validate Non Member Students of the class should not be able to see the assignemnts which are assigned to the selected class
+    Login to Wizard with Instructor Role    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Assignmemts Button
+    Select the class and assign assignmnets to class    \    Expected Result:Assignment code should be generated (ex:5D6)
+    Login to Wizard with Student role, who is not the student of the selected class    Test Data: https://mmtxtest.mysatori.com User ID: gg Password:gg
+    Verify the assignment displayed in the student home page    \    Expected Result: Assignmets assigned by Instructor should not be displayed in the student home page
+
+WZ_TC09_Validate Non Member Students Automatically Added to Class
+    [Documentation]    Validate Non Member Students Automatically Added to Class after entering the assignment code, which is generated while assigning assignments to the class
+    Login to Wizard with Instructor Role    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Assignmemts Button
+    Select the class and assign assignmnets to class    \    Expected Result:Assignment code should be generated (ex:5D6) for the assigned assignment
+    Enter the User Id and Password in the wizard with student role who is not the member of the selected class    Test Data: https://mmtxtest.mysatori.com User ID: gg Password:gg
+    Enter the assignment code (ex:'5D6')which is generated while allocating assignment to the class and click on Sign In button    Test Data: https:5D6
+    Verify the assignment displayed in the student home page    \    Expected Result: Assignmets assigned by Instructor should \ be displayed in the student home page and student should be automatically added to the class
+
+WZ_TC010_Validate Deletion of Duplicate Assignments
+    [Documentation]    Validate Deletion of Duplicate Assignments, when a duplicate assignment is assigned then a Red badge should be diaplyed on the top right corner of the icon after cliking on the red badge delet button should be displayed.
+    ...    Click on Delete button, the duplicate assignment should be deleted
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Verify home screen
+    Click On Assignmemts Button
+    Select the class and add assignments to the class
+    Select the same class and add the same assignment to the class
+    Click on the Red badge of the assignmnet    \    Expected Result:Assignment name should be displayed with delete button
+    Click on Delete button    \    Expected result:Duplicate assignment should be deleted
+
+WZ_TC011_Validate Total Available Seat
+    [Documentation]    Validate Total Available Seat, while assigning subject levels to the selected class total available seats for the selected class should be displayed
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Verify home screen
+    Click On Assignmemts Button
+    Select the class
+    Select the Subject
+    Select the Level    \    Expected Result: Total Student Seats Available message should be displayed (ex:Title: STAAR Science Assessments Level 6 \ 30 of 30 Total Student Seats Available.)
+
+WZ_TC012_Validate Hand Out Now Functionality in Completed Screen
+    [Documentation]    Validate Handout Functionality in Completed Screen, after assigning assignments to the student of selected class completed screen should be displayed with the Handout button when Handout button is clicked then students in the selected class will get the assignments auotmatically
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Assignmemts Button
+    Select a class and assign the assignments to the class
+    Verify the Completed Screen
+    Select the check box and Click on Handout Button    \    Expected Result: Students in the selected class will get the assignments auotmatically
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: testM1@123, Password:testM1@123
+    Verify home page    \    Expected Result: Assigned assignments should be displayed with start button and progress should be zero
+
+WZ_TC013_Validate without Hand Out Now Functionality in Completed Screen
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Assignmemts Button
+    Select a class and assign the assignments to the class
+    Verify the Completed Screen
+    Do not Click on Handout Button    \    Expected Result: New Student can access the assignment by entering the Code which is shown in the completed screen.
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: testM1@123, Password:testM1@123,Code:TF7
+    Verify home page    \    Expected Result: Assigned assignments should be displayed with start button and progress should be zero
+
+WZ_TC014_Validate number of students accessing Code without Hand Out Now button.
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: dteacher Password:dteacher
+    Click On Assignmemts Button
+    Select a class and assign the assignments to the class
+    Verify the Completed Screen
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: testM1@123, Password:testM1@123,Class Code:TF7
+    Verify home page
+    Click on Start Button
+    Submit all the questions using submit button
+    Click on Turn In Button    \    Expected Result:Graded report should be displayed
+    Repeat steps 5 to 9 till the alloted seats get completed.
+    Login to Wizard    Test Data: https://mmtxtest.mysatori.com User ID: testM1@123, Password:testM1@123,Class Code:TF7
+    Click on SignIn    "No seats available" alert should be displayed.

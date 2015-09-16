@@ -1,0 +1,44 @@
+*** Test Cases ***
+WZ_TC01_Validate Users Table
+    [Documentation]    Validate details of the Users Table when users table is selected
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Click on Users Table
+    Verify Users table
+    Select any user details    \    Expected Result:Details of the selected user should displayed in the details table.
+
+WZ_TC02_Validate Export Functionality in Users Table
+    [Documentation]    Validate Export Functionality in Users Table
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Click on User table    \    Expected Result: Users table and Details table should be displayed with Export, Add, Delete button in Enabled state.
+    Click on Export button    \    Expected Result:Users table details should be exported
+
+WZ_TC03_Validate Add Functionality with out mandatory fields
+    [Documentation]    validate Error message of Add Functionality, with out mandatory fields
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/ User ID- dteacher Password- dteacher
+    Click on Classes and Users under More button
+    Click on Add button of Users table    \    Expected Result:New User window should be displayed
+    Click on OK button without entering mandatory fields(First Name, Last Name, User ID, Password) in New User window    \    Expected Result: Error message should be displayed as "Some fields are not valid"
+
+WZ_TC04_Validate Inactive Functionality in Edit Details table
+    [Documentation]    Validate Error message when Inactive user try to log in
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/
+    Click on Classes and Users under More button
+    Select a user in Users table and click on Edit button in Details table
+    Select Inactive Status radiobutton and click on save button    \    Expected Result: Status should be changed to Inactive
+    login with the selected user whose status is changed to Inactive    \    Expected Result:Error message should be displayed as "This account is set to 'Inactive' which prevents logins. Please ask you Instructor or School Admin to make it 'Active' "
+
+WZ_TC05_Validate Expand and Collapse functionality in Users Details table
+    [Documentation]    Validate Expand and Collapse functionality in Users Details table, when Expanded \ and Collapsed
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/
+    Click on Classes and Users under More button
+    Click on Expand i.e, on the right corner of the Students & Users table    \    Expected Result: Details table should be displayed
+    Click on collapse in details table    \    Expected Result: Details table should be collapsed
+
+WZ_TC06_Validate Cancel Functionality in Details table
+    [Documentation]    Validate Cancel Functionality in Details table, after modifying the changes
+    Login to Wizard    Test Data: http://mmtxtest.mysatori.com/
+    Click on Classes and Users under More button
+    Click on Edit button of students details table
+    Modify all the fields and click on cancel button    \    Expected Result:Changes in the field should not be saved

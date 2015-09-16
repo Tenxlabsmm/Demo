@@ -1,0 +1,42 @@
+*** Settings ***
+Resource          ../Keywords/super.txt
+
+*** Test Cases ***
+WZ_TC01_Validate help Button in Home Page
+    [Documentation]    1.Login Into the Wizard App.
+    ...    2.Enter the Admin Credentials and click on Sign In Button.
+    ...    3.Verifying visibility of 'Help' button at home Page .
+    ...    4.Click on Help Button.
+    ...    5.Verifying visibility of 'Help' Window.
+    Comment    Login into Wizard App with Instructor Role.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Sleep    20s
+    Comment    Verifying visibility of 'Help' Button at Home Page.
+    ${helpBtnStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.home.help}    20s    Home Screen doesnot Contains Help button
+    Comment    Clicking on 'Help' Button.
+    Run Keyword If    ${helpBtnStatus}==True    Click Element    ${button.home.help}
+    Comment    Verifying visibility of \ 'Help' Window.
+    ${windowStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${label.help.helpWindow}    20s
+    Run Keyword If    ${windowStatus}==False    Fail    Help Window is not Opened.
+    [Teardown]    Stop Application
+
+WZ_TC02_Validate Sign Out Button in Home Page
+    [Documentation]    1.Login Into the Wizard App.
+    ...    2.Enter the Admin Credentials \ and click on Sign In Button.
+    ...    3.Verifying visibility of \ 'Sign Out' button at home Page .
+    ...    4.Click on SignOut Button.
+    ...    5.Verifying visibility of \ 'Login \ Page' .
+    Comment    Login into Wizard App with Admin Role.
+    ${loginStatus}=    LoginToApplication    ${WizardURL}    ${BROWSER}    ${adminUserID}    ${adminPassword}
+    Run Keyword If    ${loginStatus}==False    Fail    The user is not able to login with valid credentials.
+    Sleep    20s
+    Comment    Verifying visibility of 'Sign Out' Button at Home Page .
+    ${signOutBtnStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${button.wizard.signOut}    20s    Home Screen doesnot Contains 'Sign Out' button
+    Comment    Clicking on 'Sign Out' Button.
+    Run Keyword If    ${signOutBtnStatus}==True    Click Element    ${button.wizard.signOut}
+    Sleep    10s
+    Comment    Verifying Visibility of 'Login Page'.
+    ${windowStatus}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${label.login.motivationOnLine}    20s
+    Run Keyword If    ${windowStatus}==False    Fail    Sign Out of Application Not redirected to Login Page.
+    [Teardown]    Stop Application
